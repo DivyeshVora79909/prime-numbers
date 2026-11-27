@@ -1,0 +1,5654 @@
+{
+  "python": "3.12.14",
+  "machine": "x86_64",
+  "methods": {
+    "timings": "Wall-clock microseconds with conversion, update, division and query timed separately.",
+    "bytes": "Actual serialized DAG size including one record per reachable node.",
+    "random_recursive_bases": "Positive recursive exponents with randomly signed terms and independently sampled root signs. Distinct positions are multiples of four. Shared templates use a separately seeded pool.",
+    "oracle": "Independent raw expression evaluation using the observed powers-of-two residue cycle. Prime cases fold explicit fixture IDs modulo the query modulus.",
+    "adaptive_eager": "Allow up to 1,000 signed normalization work units. Return the smaller of the eager and deferred results.",
+    "prime_updates": "Sequential product of distinct sampled IDs. The unmined factor-tree lane runs every checkpoint. Stage medians include updates since the previous checkpoint.",
+    "division": "Pure checked division validates divisibility by residue. Adaptive division uses a retained, already-packed exact factor. For the first seed in each deep configuration, canonical division recovers the pure quotient from only the two normalized input markings."
+  },
+  "numpy_version": "2.3.5",
+  "deep": [
+    {
+      "depth": 3,
+      "width": 2,
+      "seed": 51,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 7,
+        "right_recursive_nodes": 7,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 946.208,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 24,
+          "edges": 50,
+          "bytes": 79
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 24,
+          "edges": 49,
+          "bytes": 78
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 36,
+          "edges": 91,
+          "bytes": 132
+        },
+        "multiply_us": 544.522,
+        "product_mod_97_us": 40.341,
+        "checked_odd_divide_us": 80.722,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.826,
+        "shift_divide_us": 258.019
+      },
+      "pure_fast": {
+        "input_import_us": 879.688,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 24,
+          "edges": 50,
+          "bytes": 79
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 24,
+          "edges": 49,
+          "bytes": 78
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 36,
+          "edges": 91,
+          "bytes": 132
+        },
+        "multiply_us": 182.445,
+        "product_mod_97_us": 35.364,
+        "checked_odd_divide_us": 34.482,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.245,
+        "shift_divide_us": 257.239,
+        "canonical_divide": {
+          "divide_us": 924.195,
+          "numerator_stats": {
+            "terms": 4,
+            "nodes": 36,
+            "edges": 91,
+            "bytes": 132
+          },
+          "denominator_stats": {
+            "terms": 2,
+            "nodes": 24,
+            "edges": 49,
+            "bytes": 78
+          },
+          "quotient_stats": {
+            "terms": 2,
+            "nodes": 24,
+            "edges": 50,
+            "bytes": 79
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 164.097,
+        "left_stats": {
+          "bytes": 103,
+          "nodes": 24,
+          "edges": 50
+        },
+        "right_stats": {
+          "bytes": 102,
+          "nodes": 24,
+          "edges": 49
+        },
+        "product_stats": {
+          "bytes": 166,
+          "nodes": 38,
+          "edges": 85
+        },
+        "product_kind": "mul",
+        "multiply_us": 7.832,
+        "product_mod_97_us": 26.94,
+        "structural_divide_us": 3.105,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.833
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 8890.07,
+        "left_stats": {
+          "bytes": 103,
+          "nodes": 24,
+          "edges": 50
+        },
+        "right_stats": {
+          "bytes": 102,
+          "nodes": 24,
+          "edges": 49
+        },
+        "product_stats": {
+          "bytes": 166,
+          "nodes": 38,
+          "edges": 85
+        },
+        "product_kind": "mul",
+        "multiply_us": 5.539,
+        "product_mod_97_us": 27.101,
+        "structural_divide_us": 4.016,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.412
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 2763.121,
+        "left_stats": {
+          "bytes": 103,
+          "nodes": 24,
+          "edges": 50
+        },
+        "right_stats": {
+          "bytes": 102,
+          "nodes": 24,
+          "edges": 49
+        },
+        "product_stats": {
+          "bytes": 166,
+          "nodes": 38,
+          "edges": 85
+        },
+        "product_kind": "mul",
+        "multiply_us": 3638.151,
+        "product_mod_97_us": 28.303,
+        "structural_divide_us": 2.244,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.633
+      }
+    },
+    {
+      "depth": 3,
+      "width": 2,
+      "seed": 342,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 7,
+        "right_recursive_nodes": 7,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 843.984,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 25,
+          "edges": 49,
+          "bytes": 79
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 24,
+          "edges": 47,
+          "bytes": 76
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 37,
+          "edges": 88,
+          "bytes": 130
+        },
+        "multiply_us": 690.252,
+        "product_mod_97_us": 36.194,
+        "checked_odd_divide_us": 41.453,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.095,
+        "shift_divide_us": 303.718
+      },
+      "pure_fast": {
+        "input_import_us": 744.064,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 25,
+          "edges": 49,
+          "bytes": 79
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 24,
+          "edges": 47,
+          "bytes": 76
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 37,
+          "edges": 88,
+          "bytes": 130
+        },
+        "multiply_us": 225.701,
+        "product_mod_97_us": 49.415,
+        "checked_odd_divide_us": 47.672,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.804,
+        "shift_divide_us": 254.013
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 151.959,
+        "left_stats": {
+          "bytes": 104,
+          "nodes": 25,
+          "edges": 49
+        },
+        "right_stats": {
+          "bytes": 100,
+          "nodes": 24,
+          "edges": 47
+        },
+        "product_stats": {
+          "bytes": 165,
+          "nodes": 39,
+          "edges": 82
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.84,
+        "product_mod_97_us": 25.739,
+        "structural_divide_us": 2.234,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.242
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 3878.814,
+        "left_stats": {
+          "bytes": 103,
+          "nodes": 25,
+          "edges": 48
+        },
+        "right_stats": {
+          "bytes": 99,
+          "nodes": 24,
+          "edges": 45
+        },
+        "product_stats": {
+          "bytes": 167,
+          "nodes": 40,
+          "edges": 81
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.22,
+        "product_mod_97_us": 26.51,
+        "structural_divide_us": 2.283,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.412
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 3143.295,
+        "left_stats": {
+          "bytes": 103,
+          "nodes": 25,
+          "edges": 48
+        },
+        "right_stats": {
+          "bytes": 99,
+          "nodes": 24,
+          "edges": 45
+        },
+        "product_stats": {
+          "bytes": 167,
+          "nodes": 40,
+          "edges": 81
+        },
+        "product_kind": "mul",
+        "multiply_us": 4455.136,
+        "product_mod_97_us": 26.671,
+        "structural_divide_us": 2.093,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.642
+      }
+    },
+    {
+      "depth": 3,
+      "width": 2,
+      "seed": 20261128,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 7,
+        "right_recursive_nodes": 7,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 997.166,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 25,
+          "edges": 52,
+          "bytes": 82
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 25,
+          "edges": 54,
+          "bytes": 84
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 38,
+          "edges": 97,
+          "bytes": 140
+        },
+        "multiply_us": 634.868,
+        "product_mod_97_us": 36.936,
+        "checked_odd_divide_us": 36.936,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.624,
+        "shift_divide_us": 824.585
+      },
+      "pure_fast": {
+        "input_import_us": 905.006,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 25,
+          "edges": 52,
+          "bytes": 82
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 25,
+          "edges": 54,
+          "bytes": 84
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 38,
+          "edges": 97,
+          "bytes": 140
+        },
+        "multiply_us": 211.67,
+        "product_mod_97_us": 59.4,
+        "checked_odd_divide_us": 40.111,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.904,
+        "shift_divide_us": 350.71
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 138.889,
+        "left_stats": {
+          "bytes": 107,
+          "nodes": 25,
+          "edges": 52
+        },
+        "right_stats": {
+          "bytes": 109,
+          "nodes": 25,
+          "edges": 54
+        },
+        "product_stats": {
+          "bytes": 176,
+          "nodes": 40,
+          "edges": 91
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.58,
+        "product_mod_97_us": 27.071,
+        "structural_divide_us": 24.147,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.432
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 3177.266,
+        "left_stats": {
+          "bytes": 107,
+          "nodes": 25,
+          "edges": 52
+        },
+        "right_stats": {
+          "bytes": 108,
+          "nodes": 25,
+          "edges": 53
+        },
+        "product_stats": {
+          "bytes": 179,
+          "nodes": 41,
+          "edges": 92
+        },
+        "product_kind": "mul",
+        "multiply_us": 5.148,
+        "product_mod_97_us": 26.49,
+        "structural_divide_us": 2.854,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.492
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 3604.521,
+        "left_stats": {
+          "bytes": 107,
+          "nodes": 25,
+          "edges": 52
+        },
+        "right_stats": {
+          "bytes": 108,
+          "nodes": 25,
+          "edges": 53
+        },
+        "product_stats": {
+          "bytes": 178,
+          "nodes": 38,
+          "edges": 97
+        },
+        "product_kind": "naf",
+        "multiply_us": 5118.817,
+        "product_mod_97_us": 27.952,
+        "structural_divide_us": 2.884,
+        "quotient_kind": "naf",
+        "multiply_back_us": 1.362
+      }
+    },
+    {
+      "depth": 3,
+      "width": 2,
+      "seed": 51,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 6,
+        "right_recursive_nodes": 6,
+        "shared_recursive_nodes": 3
+      },
+      "pure": {
+        "input_import_us": 573.446,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 20,
+          "edges": 39,
+          "bytes": 64
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 42,
+          "bytes": 68
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 25,
+          "edges": 55,
+          "bytes": 85
+        },
+        "multiply_us": 361.345,
+        "product_mod_97_us": 27.992,
+        "checked_odd_divide_us": 30.566,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.614,
+        "shift_divide_us": 177.939
+      },
+      "pure_fast": {
+        "input_import_us": 552.684,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 20,
+          "edges": 39,
+          "bytes": 64
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 42,
+          "bytes": 68
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 25,
+          "edges": 55,
+          "bytes": 85
+        },
+        "multiply_us": 222.546,
+        "product_mod_97_us": 27.101,
+        "checked_odd_divide_us": 26.63,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.533,
+        "shift_divide_us": 276.978,
+        "canonical_divide": {
+          "divide_us": 633.296,
+          "numerator_stats": {
+            "terms": 4,
+            "nodes": 25,
+            "edges": 55,
+            "bytes": 85
+          },
+          "denominator_stats": {
+            "terms": 2,
+            "nodes": 21,
+            "edges": 42,
+            "bytes": 68
+          },
+          "quotient_stats": {
+            "terms": 2,
+            "nodes": 20,
+            "edges": 39,
+            "bytes": 64
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 269.256,
+        "left_stats": {
+          "bytes": 84,
+          "nodes": 20,
+          "edges": 39
+        },
+        "right_stats": {
+          "bytes": 89,
+          "nodes": 21,
+          "edges": 42
+        },
+        "product_stats": {
+          "bytes": 105,
+          "nodes": 25,
+          "edges": 50
+        },
+        "product_kind": "mul",
+        "multiply_us": 5.649,
+        "product_mod_97_us": 12.609,
+        "structural_divide_us": 2.244,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.353
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 2305.42,
+        "left_stats": {
+          "bytes": 80,
+          "nodes": 19,
+          "edges": 37
+        },
+        "right_stats": {
+          "bytes": 89,
+          "nodes": 21,
+          "edges": 42
+        },
+        "product_stats": {
+          "bytes": 136,
+          "nodes": 32,
+          "edges": 67
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.11,
+        "product_mod_97_us": 14.582,
+        "structural_divide_us": 1.843,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.282
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 2426.553,
+        "left_stats": {
+          "bytes": 80,
+          "nodes": 19,
+          "edges": 37
+        },
+        "right_stats": {
+          "bytes": 89,
+          "nodes": 21,
+          "edges": 42
+        },
+        "product_stats": {
+          "bytes": 110,
+          "nodes": 25,
+          "edges": 55
+        },
+        "product_kind": "naf",
+        "multiply_us": 2302.807,
+        "product_mod_97_us": 37.817,
+        "structural_divide_us": 2.303,
+        "quotient_kind": "naf",
+        "multiply_back_us": 1.382
+      }
+    },
+    {
+      "depth": 3,
+      "width": 2,
+      "seed": 342,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 7,
+        "right_recursive_nodes": 6,
+        "shared_recursive_nodes": 2
+      },
+      "pure": {
+        "input_import_us": 748.29,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 22,
+          "edges": 43,
+          "bytes": 70
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 41,
+          "bytes": 67
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 28,
+          "edges": 63,
+          "bytes": 96
+        },
+        "multiply_us": 548.408,
+        "product_mod_97_us": 29.885,
+        "checked_odd_divide_us": 32.009,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.945,
+        "shift_divide_us": 188.535
+      },
+      "pure_fast": {
+        "input_import_us": 703.522,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 22,
+          "edges": 43,
+          "bytes": 70
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 41,
+          "bytes": 67
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 28,
+          "edges": 63,
+          "bytes": 96
+        },
+        "multiply_us": 219.541,
+        "product_mod_97_us": 28.874,
+        "checked_odd_divide_us": 29.475,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.674,
+        "shift_divide_us": 204.619
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 105.719,
+        "left_stats": {
+          "bytes": 92,
+          "nodes": 22,
+          "edges": 43
+        },
+        "right_stats": {
+          "bytes": 88,
+          "nodes": 21,
+          "edges": 41
+        },
+        "product_stats": {
+          "bytes": 121,
+          "nodes": 29,
+          "edges": 58
+        },
+        "product_kind": "mul",
+        "multiply_us": 5.679,
+        "product_mod_97_us": 14.151,
+        "structural_divide_us": 1.913,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.152
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 2168.543,
+        "left_stats": {
+          "bytes": 92,
+          "nodes": 22,
+          "edges": 43
+        },
+        "right_stats": {
+          "bytes": 88,
+          "nodes": 21,
+          "edges": 41
+        },
+        "product_stats": {
+          "bytes": 121,
+          "nodes": 29,
+          "edges": 58
+        },
+        "product_kind": "mul",
+        "multiply_us": 4.938,
+        "product_mod_97_us": 14.281,
+        "structural_divide_us": 1.813,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.252
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 2534.897,
+        "left_stats": {
+          "bytes": 92,
+          "nodes": 22,
+          "edges": 43
+        },
+        "right_stats": {
+          "bytes": 88,
+          "nodes": 21,
+          "edges": 41
+        },
+        "product_stats": {
+          "bytes": 121,
+          "nodes": 29,
+          "edges": 58
+        },
+        "product_kind": "mul",
+        "multiply_us": 2827.819,
+        "product_mod_97_us": 17.396,
+        "structural_divide_us": 2.543,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.633
+      }
+    },
+    {
+      "depth": 3,
+      "width": 2,
+      "seed": 20261128,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 6,
+        "right_recursive_nodes": 6,
+        "shared_recursive_nodes": 3
+      },
+      "pure": {
+        "input_import_us": 589.24,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 41,
+          "bytes": 67
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 42,
+          "bytes": 68
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 26,
+          "edges": 58,
+          "bytes": 89
+        },
+        "multiply_us": 395.106,
+        "product_mod_97_us": 41.582,
+        "checked_odd_divide_us": 33.811,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.654,
+        "shift_divide_us": 200.612
+      },
+      "pure_fast": {
+        "input_import_us": 1159.881,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 41,
+          "bytes": 67
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 21,
+          "edges": 42,
+          "bytes": 68
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 26,
+          "edges": 58,
+          "bytes": 89
+        },
+        "multiply_us": 236.116,
+        "product_mod_97_us": 27.261,
+        "checked_odd_divide_us": 92.249,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.744,
+        "shift_divide_us": 232.331
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 159.922,
+        "left_stats": {
+          "bytes": 88,
+          "nodes": 21,
+          "edges": 41
+        },
+        "right_stats": {
+          "bytes": 89,
+          "nodes": 21,
+          "edges": 42
+        },
+        "product_stats": {
+          "bytes": 110,
+          "nodes": 26,
+          "edges": 53
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.53,
+        "product_mod_97_us": 13.15,
+        "structural_divide_us": 2.364,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.402
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 2380.423,
+        "left_stats": {
+          "bytes": 88,
+          "nodes": 21,
+          "edges": 41
+        },
+        "right_stats": {
+          "bytes": 87,
+          "nodes": 21,
+          "edges": 40
+        },
+        "product_stats": {
+          "bytes": 126,
+          "nodes": 30,
+          "edges": 61
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.53,
+        "product_mod_97_us": 13.321,
+        "structural_divide_us": 2.073,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.282
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 2790.493,
+        "left_stats": {
+          "bytes": 88,
+          "nodes": 21,
+          "edges": 41
+        },
+        "right_stats": {
+          "bytes": 87,
+          "nodes": 21,
+          "edges": 40
+        },
+        "product_stats": {
+          "bytes": 112,
+          "nodes": 26,
+          "edges": 55
+        },
+        "product_kind": "mul",
+        "multiply_us": 2435.477,
+        "product_mod_97_us": 31.177,
+        "structural_divide_us": 1.923,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.352
+      }
+    },
+    {
+      "depth": 3,
+      "width": 4,
+      "seed": 51,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 21,
+        "right_recursive_nodes": 21,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 8337.756,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 79,
+          "edges": 241,
+          "bytes": 340
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 78,
+          "edges": 241,
+          "bytes": 339
+        },
+        "product_stats": {
+          "terms": 16,
+          "nodes": 131,
+          "edges": 500,
+          "bytes": 778
+        },
+        "multiply_us": 7316.693,
+        "product_mod_97_us": 161.945,
+        "checked_odd_divide_us": 123.166,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.844,
+        "shift_divide_us": 3780.287
+      },
+      "pure_fast": {
+        "input_import_us": 8155.731,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 79,
+          "edges": 241,
+          "bytes": 340
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 78,
+          "edges": 241,
+          "bytes": 339
+        },
+        "product_stats": {
+          "terms": 16,
+          "nodes": 131,
+          "edges": 500,
+          "bytes": 778
+        },
+        "multiply_us": 1013.26,
+        "product_mod_97_us": 141.934,
+        "checked_odd_divide_us": 147.482,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.425,
+        "shift_divide_us": 3669.859,
+        "canonical_divide": {
+          "divide_us": 11715.004,
+          "numerator_stats": {
+            "terms": 16,
+            "nodes": 131,
+            "edges": 500,
+            "bytes": 778
+          },
+          "denominator_stats": {
+            "terms": 4,
+            "nodes": 78,
+            "edges": 241,
+            "bytes": 339
+          },
+          "quotient_stats": {
+            "terms": 4,
+            "nodes": 79,
+            "edges": 241,
+            "bytes": 340
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 714.769,
+        "left_stats": {
+          "bytes": 419,
+          "nodes": 79,
+          "edges": 241
+        },
+        "right_stats": {
+          "bytes": 417,
+          "nodes": 78,
+          "edges": 241
+        },
+        "product_stats": {
+          "bytes": 725,
+          "nodes": 125,
+          "edges": 398
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.923,
+        "product_mod_97_us": 112.751,
+        "structural_divide_us": 3.456,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.542
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 21156.555,
+        "left_stats": {
+          "bytes": 419,
+          "nodes": 79,
+          "edges": 241
+        },
+        "right_stats": {
+          "bytes": 417,
+          "nodes": 78,
+          "edges": 241
+        },
+        "product_stats": {
+          "bytes": 725,
+          "nodes": 125,
+          "edges": 398
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.59,
+        "product_mod_97_us": 105.49,
+        "structural_divide_us": 25.278,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.562
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 23123.886,
+        "left_stats": {
+          "bytes": 419,
+          "nodes": 79,
+          "edges": 241
+        },
+        "right_stats": {
+          "bytes": 417,
+          "nodes": 78,
+          "edges": 241
+        },
+        "product_stats": {
+          "bytes": 725,
+          "nodes": 125,
+          "edges": 398
+        },
+        "product_kind": "mul",
+        "multiply_us": 120643.8,
+        "product_mod_97_us": 182.175,
+        "structural_divide_us": 3.775,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.793
+      }
+    },
+    {
+      "depth": 3,
+      "width": 4,
+      "seed": 342,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 21,
+        "right_recursive_nodes": 21,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 7888.518,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 79,
+          "edges": 237,
+          "bytes": 335
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 79,
+          "edges": 238,
+          "bytes": 337
+        },
+        "product_stats": {
+          "terms": 16,
+          "nodes": 130,
+          "edges": 492,
+          "bytes": 765
+        },
+        "multiply_us": 6945.815,
+        "product_mod_97_us": 232.771,
+        "checked_odd_divide_us": 124.488,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.535,
+        "shift_divide_us": 3703.03
+      },
+      "pure_fast": {
+        "input_import_us": 15353.917,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 79,
+          "edges": 237,
+          "bytes": 335
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 79,
+          "edges": 238,
+          "bytes": 337
+        },
+        "product_stats": {
+          "terms": 16,
+          "nodes": 130,
+          "edges": 492,
+          "bytes": 765
+        },
+        "multiply_us": 1002.864,
+        "product_mod_97_us": 234.474,
+        "checked_odd_divide_us": 118.168,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.145,
+        "shift_divide_us": 4228.582
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 563.981,
+        "left_stats": {
+          "bytes": 414,
+          "nodes": 79,
+          "edges": 237
+        },
+        "right_stats": {
+          "bytes": 416,
+          "nodes": 79,
+          "edges": 238
+        },
+        "product_stats": {
+          "bytes": 713,
+          "nodes": 124,
+          "edges": 390
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.243,
+        "product_mod_97_us": 100.842,
+        "structural_divide_us": 2.553,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.462
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 20158.97,
+        "left_stats": {
+          "bytes": 404,
+          "nodes": 78,
+          "edges": 231
+        },
+        "right_stats": {
+          "bytes": 416,
+          "nodes": 79,
+          "edges": 238
+        },
+        "product_stats": {
+          "bytes": 722,
+          "nodes": 126,
+          "edges": 393
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.182,
+        "product_mod_97_us": 104.989,
+        "structural_divide_us": 3.305,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.793
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 20727.949,
+        "left_stats": {
+          "bytes": 404,
+          "nodes": 78,
+          "edges": 231
+        },
+        "right_stats": {
+          "bytes": 416,
+          "nodes": 79,
+          "edges": 238
+        },
+        "product_stats": {
+          "bytes": 722,
+          "nodes": 126,
+          "edges": 393
+        },
+        "product_kind": "mul",
+        "multiply_us": 71854.414,
+        "product_mod_97_us": 166.822,
+        "structural_divide_us": 3.615,
+        "quotient_kind": "mul",
+        "multiply_back_us": 21.973
+      }
+    },
+    {
+      "depth": 3,
+      "width": 4,
+      "seed": 20261128,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 21,
+        "right_recursive_nodes": 21,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 8811.36,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 78,
+          "edges": 241,
+          "bytes": 338
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 78,
+          "edges": 237,
+          "bytes": 333
+        },
+        "product_stats": {
+          "terms": 16,
+          "nodes": 130,
+          "edges": 500,
+          "bytes": 772
+        },
+        "multiply_us": 7491.038,
+        "product_mod_97_us": 152.931,
+        "checked_odd_divide_us": 127.853,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.535,
+        "shift_divide_us": 3967.769
+      },
+      "pure_fast": {
+        "input_import_us": 8125.616,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 78,
+          "edges": 241,
+          "bytes": 338
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 78,
+          "edges": 237,
+          "bytes": 333
+        },
+        "product_stats": {
+          "terms": 16,
+          "nodes": 130,
+          "edges": 500,
+          "bytes": 772
+        },
+        "multiply_us": 1080.161,
+        "product_mod_97_us": 144.548,
+        "checked_odd_divide_us": 153.832,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.054,
+        "shift_divide_us": 3975.921
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 701.799,
+        "left_stats": {
+          "bytes": 416,
+          "nodes": 78,
+          "edges": 241
+        },
+        "right_stats": {
+          "bytes": 411,
+          "nodes": 78,
+          "edges": 237
+        },
+        "product_stats": {
+          "bytes": 727,
+          "nodes": 124,
+          "edges": 398
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.605,
+        "product_mod_97_us": 251.5,
+        "structural_divide_us": 3.335,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.603
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 22761.859,
+        "left_stats": {
+          "bytes": 416,
+          "nodes": 78,
+          "edges": 241
+        },
+        "right_stats": {
+          "bytes": 409,
+          "nodes": 79,
+          "edges": 232
+        },
+        "product_stats": {
+          "bytes": 729,
+          "nodes": 126,
+          "edges": 397
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.951,
+        "product_mod_97_us": 117.477,
+        "structural_divide_us": 3.616,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.512
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 22539.343,
+        "left_stats": {
+          "bytes": 416,
+          "nodes": 78,
+          "edges": 241
+        },
+        "right_stats": {
+          "bytes": 409,
+          "nodes": 79,
+          "edges": 232
+        },
+        "product_stats": {
+          "bytes": 729,
+          "nodes": 126,
+          "edges": 397
+        },
+        "product_kind": "mul",
+        "multiply_us": 139172.019,
+        "product_mod_97_us": 119.918,
+        "structural_divide_us": 3.675,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.672
+      }
+    },
+    {
+      "depth": 3,
+      "width": 4,
+      "seed": 51,
+      "shared_templates": true,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 13,
+        "right_recursive_nodes": 11,
+        "shared_recursive_nodes": 8
+      },
+      "pure": {
+        "input_import_us": 5281.145,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 31,
+          "edges": 91,
+          "bytes": 127
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 28,
+          "edges": 79,
+          "bytes": 112
+        },
+        "product_stats": {
+          "terms": 15,
+          "nodes": 48,
+          "edges": 186,
+          "bytes": 239
+        },
+        "multiply_us": 6974.114,
+        "product_mod_97_us": 86.087,
+        "checked_odd_divide_us": 173.918,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.974,
+        "shift_divide_us": 2885.556
+      },
+      "pure_fast": {
+        "input_import_us": 5033.248,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 31,
+          "edges": 91,
+          "bytes": 127
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 28,
+          "edges": 79,
+          "bytes": 112
+        },
+        "product_stats": {
+          "terms": 15,
+          "nodes": 48,
+          "edges": 186,
+          "bytes": 239
+        },
+        "multiply_us": 3233.22,
+        "product_mod_97_us": 74.4,
+        "checked_odd_divide_us": 93.499,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.814,
+        "shift_divide_us": 3002.299,
+        "canonical_divide": {
+          "divide_us": 10571.654,
+          "numerator_stats": {
+            "terms": 15,
+            "nodes": 48,
+            "edges": 186,
+            "bytes": 239
+          },
+          "denominator_stats": {
+            "terms": 4,
+            "nodes": 28,
+            "edges": 79,
+            "bytes": 112
+          },
+          "quotient_stats": {
+            "terms": 4,
+            "nodes": 31,
+            "edges": 91,
+            "bytes": 127
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 180.607,
+        "left_stats": {
+          "bytes": 158,
+          "nodes": 31,
+          "edges": 91
+        },
+        "right_stats": {
+          "bytes": 140,
+          "nodes": 28,
+          "edges": 79
+        },
+        "product_stats": {
+          "bytes": 180,
+          "nodes": 35,
+          "edges": 105
+        },
+        "product_kind": "mul",
+        "multiply_us": 7.642,
+        "product_mod_97_us": 39.528,
+        "structural_divide_us": 2.984,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.552
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 9538.914,
+        "left_stats": {
+          "bytes": 158,
+          "nodes": 31,
+          "edges": 91
+        },
+        "right_stats": {
+          "bytes": 140,
+          "nodes": 28,
+          "edges": 79
+        },
+        "product_stats": {
+          "bytes": 180,
+          "nodes": 35,
+          "edges": 105
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.961,
+        "product_mod_97_us": 36.183,
+        "structural_divide_us": 2.204,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.422
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 10258.27,
+        "left_stats": {
+          "bytes": 158,
+          "nodes": 31,
+          "edges": 91
+        },
+        "right_stats": {
+          "bytes": 140,
+          "nodes": 28,
+          "edges": 79
+        },
+        "product_stats": {
+          "bytes": 180,
+          "nodes": 35,
+          "edges": 105
+        },
+        "product_kind": "mul",
+        "multiply_us": 27691.081,
+        "product_mod_97_us": 35.242,
+        "structural_divide_us": 2.874,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.632
+      }
+    },
+    {
+      "depth": 3,
+      "width": 4,
+      "seed": 342,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 13,
+        "right_recursive_nodes": 13,
+        "shared_recursive_nodes": 12
+      },
+      "pure": {
+        "input_import_us": 5046.838,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 31,
+          "edges": 89,
+          "bytes": 125
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 31,
+          "edges": 89,
+          "bytes": 125
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 39,
+          "edges": 140,
+          "bytes": 184
+        },
+        "multiply_us": 5375.736,
+        "product_mod_97_us": 73.038,
+        "checked_odd_divide_us": 72.788,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.704,
+        "shift_divide_us": 1546.592
+      },
+      "pure_fast": {
+        "input_import_us": 4246.513,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 31,
+          "edges": 89,
+          "bytes": 125
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 31,
+          "edges": 89,
+          "bytes": 125
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 39,
+          "edges": 140,
+          "bytes": 184
+        },
+        "multiply_us": 3095.978,
+        "product_mod_97_us": 55.973,
+        "checked_odd_divide_us": 56.253,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.034,
+        "shift_divide_us": 1505.17
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 207.487,
+        "left_stats": {
+          "bytes": 156,
+          "nodes": 31,
+          "edges": 89
+        },
+        "right_stats": {
+          "bytes": 156,
+          "nodes": 31,
+          "edges": 89
+        },
+        "product_stats": {
+          "bytes": 166,
+          "nodes": 33,
+          "edges": 95
+        },
+        "product_kind": "mul",
+        "multiply_us": 7.481,
+        "product_mod_97_us": 40.6,
+        "structural_divide_us": 2.935,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.683
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 6864.922,
+        "left_stats": {
+          "bytes": 156,
+          "nodes": 31,
+          "edges": 89
+        },
+        "right_stats": {
+          "bytes": 156,
+          "nodes": 31,
+          "edges": 89
+        },
+        "product_stats": {
+          "bytes": 166,
+          "nodes": 33,
+          "edges": 95
+        },
+        "product_kind": "mul",
+        "multiply_us": 7.341,
+        "product_mod_97_us": 29.554,
+        "structural_divide_us": 2.524,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.372
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 8314.75,
+        "left_stats": {
+          "bytes": 156,
+          "nodes": 31,
+          "edges": 89
+        },
+        "right_stats": {
+          "bytes": 156,
+          "nodes": 31,
+          "edges": 89
+        },
+        "product_stats": {
+          "bytes": 166,
+          "nodes": 33,
+          "edges": 95
+        },
+        "product_kind": "mul",
+        "multiply_us": 7788.591,
+        "product_mod_97_us": 30.315,
+        "structural_divide_us": 2.263,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.583
+      }
+    },
+    {
+      "depth": 3,
+      "width": 4,
+      "seed": 20261128,
+      "shared_templates": true,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 11,
+        "right_recursive_nodes": 12,
+        "shared_recursive_nodes": 9
+      },
+      "pure": {
+        "input_import_us": 5085.155,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 29,
+          "edges": 82,
+          "bytes": 116
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 30,
+          "edges": 86,
+          "bytes": 121
+        },
+        "product_stats": {
+          "terms": 11,
+          "nodes": 43,
+          "edges": 161,
+          "bytes": 209
+        },
+        "multiply_us": 5391.749,
+        "product_mod_97_us": 67.35,
+        "checked_odd_divide_us": 71.976,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.854,
+        "shift_divide_us": 2331.615
+      },
+      "pure_fast": {
+        "input_import_us": 5208.718,
+        "left_stats": {
+          "terms": 4,
+          "nodes": 29,
+          "edges": 82,
+          "bytes": 116
+        },
+        "right_stats": {
+          "terms": 4,
+          "nodes": 30,
+          "edges": 86,
+          "bytes": 121
+        },
+        "product_stats": {
+          "terms": 11,
+          "nodes": 43,
+          "edges": 161,
+          "bytes": 209
+        },
+        "multiply_us": 3259.179,
+        "product_mod_97_us": 65.116,
+        "checked_odd_divide_us": 77.215,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.004,
+        "shift_divide_us": 1996.007
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 320.114,
+        "left_stats": {
+          "bytes": 145,
+          "nodes": 29,
+          "edges": 82
+        },
+        "right_stats": {
+          "bytes": 151,
+          "nodes": 30,
+          "edges": 86
+        },
+        "product_stats": {
+          "bytes": 167,
+          "nodes": 33,
+          "edges": 96
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.783,
+        "product_mod_97_us": 36.053,
+        "structural_divide_us": 3.455,
+        "quotient_kind": "mul",
+        "multiply_back_us": 2.113
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 10382.574,
+        "left_stats": {
+          "bytes": 145,
+          "nodes": 29,
+          "edges": 82
+        },
+        "right_stats": {
+          "bytes": 151,
+          "nodes": 30,
+          "edges": 86
+        },
+        "product_stats": {
+          "bytes": 167,
+          "nodes": 33,
+          "edges": 96
+        },
+        "product_kind": "mul",
+        "multiply_us": 7.751,
+        "product_mod_97_us": 31.497,
+        "structural_divide_us": 2.554,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.322
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 11323.138,
+        "left_stats": {
+          "bytes": 145,
+          "nodes": 29,
+          "edges": 82
+        },
+        "right_stats": {
+          "bytes": 151,
+          "nodes": 30,
+          "edges": 86
+        },
+        "product_stats": {
+          "bytes": 167,
+          "nodes": 33,
+          "edges": 96
+        },
+        "product_kind": "mul",
+        "multiply_us": 20915.181,
+        "product_mod_97_us": 31.557,
+        "structural_divide_us": 3.355,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.753
+      }
+    },
+    {
+      "depth": 3,
+      "width": 8,
+      "seed": 51,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 73,
+        "right_recursive_nodes": 73,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 102469.73,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1374
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1381
+        },
+        "product_stats": {
+          "terms": 64,
+          "nodes": 300,
+          "edges": 2415,
+          "bytes": 4269
+        },
+        "multiply_us": 109211.084,
+        "product_mod_97_us": 860.294,
+        "checked_odd_divide_us": 738.063,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.915,
+        "shift_divide_us": 54214.118
+      },
+      "pure_fast": {
+        "input_import_us": 90054.409,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1374
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1381
+        },
+        "product_stats": {
+          "terms": 64,
+          "nodes": 300,
+          "edges": 2415,
+          "bytes": 4269
+        },
+        "multiply_us": 7387.998,
+        "product_mod_97_us": 705.716,
+        "checked_odd_divide_us": 1292.966,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.566,
+        "shift_divide_us": 53265.793,
+        "canonical_divide": {
+          "divide_us": 127939.349,
+          "numerator_stats": {
+            "terms": 64,
+            "nodes": 300,
+            "edges": 2415,
+            "bytes": 4269
+          },
+          "denominator_stats": {
+            "terms": 8,
+            "nodes": 180,
+            "edges": 887,
+            "bytes": 1381
+          },
+          "quotient_stats": {
+            "terms": 8,
+            "nodes": 180,
+            "edges": 887,
+            "bytes": 1374
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 2033.313,
+        "left_stats": {
+          "bytes": 1554,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1561,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2627,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.686,
+        "product_mod_97_us": 434.925,
+        "structural_divide_us": 3.456,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.783
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 241106.935,
+        "left_stats": {
+          "bytes": 1554,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1561,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2627,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 13.75,
+        "product_mod_97_us": 481.053,
+        "structural_divide_us": 3.365,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.702
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 244587.838,
+        "left_stats": {
+          "bytes": 1554,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1561,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2627,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 423.938,
+        "product_mod_97_us": 457.788,
+        "structural_divide_us": 15.092,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.993
+      }
+    },
+    {
+      "depth": 3,
+      "width": 8,
+      "seed": 342,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 73,
+        "right_recursive_nodes": 73,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 106272.116,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1377
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1386
+        },
+        "product_stats": {
+          "terms": 64,
+          "nodes": 300,
+          "edges": 2415,
+          "bytes": 4265
+        },
+        "multiply_us": 112951.018,
+        "product_mod_97_us": 861.707,
+        "checked_odd_divide_us": 816.791,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.886,
+        "shift_divide_us": 52843.728
+      },
+      "pure_fast": {
+        "input_import_us": 94453.578,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1377
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1386
+        },
+        "product_stats": {
+          "terms": 64,
+          "nodes": 300,
+          "edges": 2415,
+          "bytes": 4265
+        },
+        "multiply_us": 7003.027,
+        "product_mod_97_us": 654.229,
+        "checked_odd_divide_us": 908.886,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 4.186,
+        "shift_divide_us": 54617.292
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 1403.466,
+        "left_stats": {
+          "bytes": 1557,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1566,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2633,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.395,
+        "product_mod_97_us": 431.23,
+        "structural_divide_us": 3.245,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.783
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 178042.316,
+        "left_stats": {
+          "bytes": 1557,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1566,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2633,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.155,
+        "product_mod_97_us": 506.067,
+        "structural_divide_us": 3.855,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.742
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 177847.677,
+        "left_stats": {
+          "bytes": 1557,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1566,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2633,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 427.424,
+        "product_mod_97_us": 640.41,
+        "structural_divide_us": 3.746,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.642
+      }
+    },
+    {
+      "depth": 3,
+      "width": 8,
+      "seed": 20261128,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 73,
+        "right_recursive_nodes": 73,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 93199.533,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1359
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1367
+        },
+        "product_stats": {
+          "terms": 64,
+          "nodes": 300,
+          "edges": 2415,
+          "bytes": 4234
+        },
+        "multiply_us": 107681.542,
+        "product_mod_97_us": 829.112,
+        "checked_odd_divide_us": 726.875,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.985,
+        "shift_divide_us": 54345.015
+      },
+      "pure_fast": {
+        "input_import_us": 96140.156,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1359
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 180,
+          "edges": 887,
+          "bytes": 1367
+        },
+        "product_stats": {
+          "terms": 64,
+          "nodes": 300,
+          "edges": 2415,
+          "bytes": 4234
+        },
+        "multiply_us": 7586.923,
+        "product_mod_97_us": 685.536,
+        "checked_odd_divide_us": 697.442,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.575,
+        "shift_divide_us": 52994.175
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 1249.817,
+        "left_stats": {
+          "bytes": 1539,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1547,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2619,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.343,
+        "product_mod_97_us": 481.202,
+        "structural_divide_us": 3.585,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.492
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 228654.604,
+        "left_stats": {
+          "bytes": 1539,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1547,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2619,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.945,
+        "product_mod_97_us": 483.154,
+        "structural_divide_us": 4.006,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.623
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 232475.735,
+        "left_stats": {
+          "bytes": 1539,
+          "nodes": 180,
+          "edges": 887
+        },
+        "right_stats": {
+          "bytes": 1547,
+          "nodes": 180,
+          "edges": 887
+        },
+        "product_stats": {
+          "bytes": 2619,
+          "nodes": 254,
+          "edges": 1473
+        },
+        "product_kind": "mul",
+        "multiply_us": 335.492,
+        "product_mod_97_us": 459.991,
+        "structural_divide_us": 4.056,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.552
+      }
+    },
+    {
+      "depth": 3,
+      "width": 8,
+      "seed": 51,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 19,
+        "right_recursive_nodes": 19,
+        "shared_recursive_nodes": 16
+      },
+      "pure": {
+        "input_import_us": 52405.68,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 198,
+          "bytes": 242
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 198,
+          "bytes": 242
+        },
+        "product_stats": {
+          "terms": 41,
+          "nodes": 81,
+          "edges": 544,
+          "bytes": 646
+        },
+        "multiply_us": 56746.456,
+        "product_mod_97_us": 162.303,
+        "checked_odd_divide_us": 270.178,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.625,
+        "shift_divide_us": 23190.836
+      },
+      "pure_fast": {
+        "input_import_us": 54822.221,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 198,
+          "bytes": 242
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 198,
+          "bytes": 242
+        },
+        "product_stats": {
+          "terms": 41,
+          "nodes": 81,
+          "edges": 544,
+          "bytes": 646
+        },
+        "multiply_us": 38013.637,
+        "product_mod_97_us": 147.302,
+        "checked_odd_divide_us": 269.257,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.845,
+        "shift_divide_us": 23075.79,
+        "canonical_divide": {
+          "divide_us": 121635.283,
+          "numerator_stats": {
+            "terms": 41,
+            "nodes": 81,
+            "edges": 544,
+            "bytes": 646
+          },
+          "denominator_stats": {
+            "terms": 8,
+            "nodes": 39,
+            "edges": 198,
+            "bytes": 242
+          },
+          "quotient_stats": {
+            "terms": 8,
+            "nodes": 39,
+            "edges": 198,
+            "bytes": 242
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 254.816,
+        "left_stats": {
+          "bytes": 281,
+          "nodes": 39,
+          "edges": 198
+        },
+        "right_stats": {
+          "bytes": 281,
+          "nodes": 39,
+          "edges": 198
+        },
+        "product_stats": {
+          "bytes": 315,
+          "nodes": 43,
+          "edges": 224
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.956,
+        "product_mod_97_us": 67.557,
+        "structural_divide_us": 3.985,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.783
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 78286.19,
+        "left_stats": {
+          "bytes": 281,
+          "nodes": 39,
+          "edges": 198
+        },
+        "right_stats": {
+          "bytes": 281,
+          "nodes": 39,
+          "edges": 198
+        },
+        "product_stats": {
+          "bytes": 315,
+          "nodes": 43,
+          "edges": 224
+        },
+        "product_kind": "mul",
+        "multiply_us": 18.396,
+        "product_mod_97_us": 74.427,
+        "structural_divide_us": 3.805,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.552
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 93758.494,
+        "left_stats": {
+          "bytes": 281,
+          "nodes": 39,
+          "edges": 198
+        },
+        "right_stats": {
+          "bytes": 281,
+          "nodes": 39,
+          "edges": 198
+        },
+        "product_stats": {
+          "bytes": 315,
+          "nodes": 43,
+          "edges": 224
+        },
+        "product_kind": "mul",
+        "multiply_us": 83578.235,
+        "product_mod_97_us": 63.791,
+        "structural_divide_us": 3.265,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.452
+      }
+    },
+    {
+      "depth": 3,
+      "width": 8,
+      "seed": 342,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 19,
+        "right_recursive_nodes": 19,
+        "shared_recursive_nodes": 17
+      },
+      "pure": {
+        "input_import_us": 49056.396,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 196,
+          "bytes": 240
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 196,
+          "bytes": 240
+        },
+        "product_stats": {
+          "terms": 33,
+          "nodes": 72,
+          "edges": 472,
+          "bytes": 556
+        },
+        "multiply_us": 49398.898,
+        "product_mod_97_us": 141.463,
+        "checked_odd_divide_us": 340.77,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.626,
+        "shift_divide_us": 18470.433
+      },
+      "pure_fast": {
+        "input_import_us": 47391.904,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 196,
+          "bytes": 240
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 196,
+          "bytes": 240
+        },
+        "product_stats": {
+          "terms": 33,
+          "nodes": 72,
+          "edges": 472,
+          "bytes": 556
+        },
+        "multiply_us": 36598.102,
+        "product_mod_97_us": 127.734,
+        "checked_odd_divide_us": 204.664,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.415,
+        "shift_divide_us": 19703.515
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 269.858,
+        "left_stats": {
+          "bytes": 279,
+          "nodes": 39,
+          "edges": 196
+        },
+        "right_stats": {
+          "bytes": 279,
+          "nodes": 39,
+          "edges": 196
+        },
+        "product_stats": {
+          "bytes": 303,
+          "nodes": 42,
+          "edges": 214
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.904,
+        "product_mod_97_us": 67.016,
+        "structural_divide_us": 3.985,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.743
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 75255.824,
+        "left_stats": {
+          "bytes": 279,
+          "nodes": 39,
+          "edges": 196
+        },
+        "right_stats": {
+          "bytes": 279,
+          "nodes": 39,
+          "edges": 196
+        },
+        "product_stats": {
+          "bytes": 303,
+          "nodes": 42,
+          "edges": 214
+        },
+        "product_kind": "mul",
+        "multiply_us": 16.955,
+        "product_mod_97_us": 67.918,
+        "structural_divide_us": 3.304,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.653
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 87046.419,
+        "left_stats": {
+          "bytes": 279,
+          "nodes": 39,
+          "edges": 196
+        },
+        "right_stats": {
+          "bytes": 279,
+          "nodes": 39,
+          "edges": 196
+        },
+        "product_stats": {
+          "bytes": 303,
+          "nodes": 42,
+          "edges": 214
+        },
+        "product_kind": "mul",
+        "multiply_us": 89319.023,
+        "product_mod_97_us": 60.266,
+        "structural_divide_us": 3.875,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.602
+      }
+    },
+    {
+      "depth": 3,
+      "width": 8,
+      "seed": 20261128,
+      "shared_templates": true,
+      "operand_signs": [
+        -1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 19,
+        "right_recursive_nodes": 19,
+        "shared_recursive_nodes": 16
+      },
+      "pure": {
+        "input_import_us": 55356.689,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 197,
+          "bytes": 241
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 197,
+          "bytes": 241
+        },
+        "product_stats": {
+          "terms": 41,
+          "nodes": 82,
+          "edges": 539,
+          "bytes": 643
+        },
+        "multiply_us": 54741.855,
+        "product_mod_97_us": 179.919,
+        "checked_odd_divide_us": 230.611,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.525,
+        "shift_divide_us": 22642.498
+      },
+      "pure_fast": {
+        "input_import_us": 50086.616,
+        "left_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 197,
+          "bytes": 241
+        },
+        "right_stats": {
+          "terms": 8,
+          "nodes": 39,
+          "edges": 197,
+          "bytes": 241
+        },
+        "product_stats": {
+          "terms": 41,
+          "nodes": 82,
+          "edges": 539,
+          "bytes": 643
+        },
+        "multiply_us": 35203.759,
+        "product_mod_97_us": 176.594,
+        "checked_odd_divide_us": 256.468,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.966,
+        "shift_divide_us": 21860.143
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 264.801,
+        "left_stats": {
+          "bytes": 280,
+          "nodes": 39,
+          "edges": 197
+        },
+        "right_stats": {
+          "bytes": 280,
+          "nodes": 39,
+          "edges": 197
+        },
+        "product_stats": {
+          "bytes": 314,
+          "nodes": 43,
+          "edges": 223
+        },
+        "product_kind": "mul",
+        "multiply_us": 11.016,
+        "product_mod_97_us": 70.191,
+        "structural_divide_us": 3.786,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.792
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 23559.005,
+        "left_stats": {
+          "bytes": 280,
+          "nodes": 39,
+          "edges": 197
+        },
+        "right_stats": {
+          "bytes": 280,
+          "nodes": 39,
+          "edges": 197
+        },
+        "product_stats": {
+          "bytes": 314,
+          "nodes": 43,
+          "edges": 223
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.192,
+        "product_mod_97_us": 66.455,
+        "structural_divide_us": 3.495,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.422
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 22906.808,
+        "left_stats": {
+          "bytes": 280,
+          "nodes": 39,
+          "edges": 197
+        },
+        "right_stats": {
+          "bytes": 280,
+          "nodes": 39,
+          "edges": 197
+        },
+        "product_stats": {
+          "bytes": 314,
+          "nodes": 43,
+          "edges": 223
+        },
+        "product_kind": "mul",
+        "multiply_us": 100407.348,
+        "product_mod_97_us": 63.461,
+        "structural_divide_us": 3.385,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.532
+      }
+    },
+    {
+      "depth": 5,
+      "width": 2,
+      "seed": 51,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 31,
+        "right_recursive_nodes": 31,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 5001.537,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 67,
+          "edges": 157,
+          "bytes": 231
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 70,
+          "edges": 159,
+          "bytes": 239
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 119,
+          "edges": 289,
+          "bytes": 472
+        },
+        "multiply_us": 2403.133,
+        "product_mod_97_us": 53.827,
+        "checked_odd_divide_us": 42.601,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.774,
+        "shift_divide_us": 1215.687
+      },
+      "pure_fast": {
+        "input_import_us": 4720.133,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 67,
+          "edges": 157,
+          "bytes": 231
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 70,
+          "edges": 159,
+          "bytes": 239
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 119,
+          "edges": 289,
+          "bytes": 472
+        },
+        "multiply_us": 559.784,
+        "product_mod_97_us": 72.304,
+        "checked_odd_divide_us": 35.541,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.904,
+        "shift_divide_us": 1206.123,
+        "canonical_divide": {
+          "divide_us": 3982.453,
+          "numerator_stats": {
+            "terms": 4,
+            "nodes": 119,
+            "edges": 289,
+            "bytes": 472
+          },
+          "denominator_stats": {
+            "terms": 2,
+            "nodes": 70,
+            "edges": 159,
+            "bytes": 239
+          },
+          "quotient_stats": {
+            "terms": 2,
+            "nodes": 67,
+            "edges": 157,
+            "bytes": 231
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 506.969,
+        "left_stats": {
+          "bytes": 298,
+          "nodes": 67,
+          "edges": 157
+        },
+        "right_stats": {
+          "bytes": 309,
+          "nodes": 70,
+          "edges": 159
+        },
+        "product_stats": {
+          "bytes": 584,
+          "nodes": 121,
+          "edges": 283
+        },
+        "product_kind": "mul",
+        "multiply_us": 7.12,
+        "product_mod_97_us": 27.51,
+        "structural_divide_us": 3.475,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.462
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 10154.301,
+        "left_stats": {
+          "bytes": 298,
+          "nodes": 67,
+          "edges": 157
+        },
+        "right_stats": {
+          "bytes": 308,
+          "nodes": 71,
+          "edges": 157
+        },
+        "product_stats": {
+          "bytes": 585,
+          "nodes": 123,
+          "edges": 284
+        },
+        "product_kind": "mul",
+        "multiply_us": 5.718,
+        "product_mod_97_us": 27.049,
+        "structural_divide_us": 3.285,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.382
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 9487.565,
+        "left_stats": {
+          "bytes": 298,
+          "nodes": 67,
+          "edges": 157
+        },
+        "right_stats": {
+          "bytes": 308,
+          "nodes": 71,
+          "edges": 157
+        },
+        "product_stats": {
+          "bytes": 585,
+          "nodes": 123,
+          "edges": 284
+        },
+        "product_kind": "mul",
+        "multiply_us": 13762.796,
+        "product_mod_97_us": 30.394,
+        "structural_divide_us": 3.515,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.402
+      }
+    },
+    {
+      "depth": 5,
+      "width": 2,
+      "seed": 342,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 31,
+        "right_recursive_nodes": 31,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 4693.065,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 69,
+          "edges": 159,
+          "bytes": 237
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 67,
+          "edges": 150,
+          "bytes": 224
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 120,
+          "edges": 286,
+          "bytes": 476
+        },
+        "multiply_us": 2597.192,
+        "product_mod_97_us": 53.577,
+        "checked_odd_divide_us": 40.217,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.485,
+        "shift_divide_us": 1184.092
+      },
+      "pure_fast": {
+        "input_import_us": 4571.779,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 69,
+          "edges": 159,
+          "bytes": 237
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 67,
+          "edges": 150,
+          "bytes": 224
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 120,
+          "edges": 286,
+          "bytes": 476
+        },
+        "multiply_us": 566.064,
+        "product_mod_97_us": 53.166,
+        "checked_odd_divide_us": 35.33,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.704,
+        "shift_divide_us": 1166.526
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 624.647,
+        "left_stats": {
+          "bytes": 306,
+          "nodes": 69,
+          "edges": 159
+        },
+        "right_stats": {
+          "bytes": 291,
+          "nodes": 67,
+          "edges": 150
+        },
+        "product_stats": {
+          "bytes": 589,
+          "nodes": 122,
+          "edges": 280
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.813,
+        "product_mod_97_us": 26.919,
+        "structural_divide_us": 3.685,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.492
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 9655.265,
+        "left_stats": {
+          "bytes": 306,
+          "nodes": 69,
+          "edges": 159
+        },
+        "right_stats": {
+          "bytes": 291,
+          "nodes": 67,
+          "edges": 150
+        },
+        "product_stats": {
+          "bytes": 589,
+          "nodes": 122,
+          "edges": 280
+        },
+        "product_kind": "mul",
+        "multiply_us": 4.947,
+        "product_mod_97_us": 28.611,
+        "structural_divide_us": 2.754,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.312
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 10330.635,
+        "left_stats": {
+          "bytes": 306,
+          "nodes": 69,
+          "edges": 159
+        },
+        "right_stats": {
+          "bytes": 291,
+          "nodes": 67,
+          "edges": 150
+        },
+        "product_stats": {
+          "bytes": 589,
+          "nodes": 122,
+          "edges": 280
+        },
+        "product_kind": "mul",
+        "multiply_us": 13810.326,
+        "product_mod_97_us": 29.001,
+        "structural_divide_us": 3.035,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.723
+      }
+    },
+    {
+      "depth": 5,
+      "width": 2,
+      "seed": 20261128,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 31,
+        "right_recursive_nodes": 31,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 4710.95,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 66,
+          "edges": 151,
+          "bytes": 223
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 72,
+          "edges": 167,
+          "bytes": 251
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 119,
+          "edges": 288,
+          "bytes": 474
+        },
+        "multiply_us": 2411.245,
+        "product_mod_97_us": 55.26,
+        "checked_odd_divide_us": 44.815,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.894,
+        "shift_divide_us": 1242.085
+      },
+      "pure_fast": {
+        "input_import_us": 4730.047,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 66,
+          "edges": 151,
+          "bytes": 223
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 72,
+          "edges": 167,
+          "bytes": 251
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 119,
+          "edges": 288,
+          "bytes": 474
+        },
+        "multiply_us": 571.071,
+        "product_mod_97_us": 54.779,
+        "checked_odd_divide_us": 44.114,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.734,
+        "shift_divide_us": 1198.112
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 491.116,
+        "left_stats": {
+          "bytes": 289,
+          "nodes": 66,
+          "edges": 151
+        },
+        "right_stats": {
+          "bytes": 323,
+          "nodes": 72,
+          "edges": 167
+        },
+        "product_stats": {
+          "bytes": 584,
+          "nodes": 121,
+          "edges": 282
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.183,
+        "product_mod_97_us": 27.81,
+        "structural_divide_us": 3.305,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.512
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 9714.712,
+        "left_stats": {
+          "bytes": 288,
+          "nodes": 66,
+          "edges": 150
+        },
+        "right_stats": {
+          "bytes": 323,
+          "nodes": 72,
+          "edges": 167
+        },
+        "product_stats": {
+          "bytes": 583,
+          "nodes": 121,
+          "edges": 281
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.549,
+        "product_mod_97_us": 31.987,
+        "structural_divide_us": 2.674,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.412
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 9293.923,
+        "left_stats": {
+          "bytes": 288,
+          "nodes": 66,
+          "edges": 150
+        },
+        "right_stats": {
+          "bytes": 323,
+          "nodes": 72,
+          "edges": 167
+        },
+        "product_stats": {
+          "bytes": 583,
+          "nodes": 121,
+          "edges": 281
+        },
+        "product_kind": "mul",
+        "multiply_us": 14909.875,
+        "product_mod_97_us": 32.458,
+        "structural_divide_us": 3.235,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.553
+      }
+    },
+    {
+      "depth": 5,
+      "width": 2,
+      "seed": 51,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 21,
+        "right_recursive_nodes": 21,
+        "shared_recursive_nodes": 19
+      },
+      "pure": {
+        "input_import_us": 2735.484,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 39,
+          "edges": 81,
+          "bytes": 125
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 39,
+          "edges": 81,
+          "bytes": 125
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 44,
+          "edges": 99,
+          "bytes": 148
+        },
+        "multiply_us": 1866.486,
+        "product_mod_97_us": 61.24,
+        "checked_odd_divide_us": 35.232,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.064,
+        "shift_divide_us": 903.378
+      },
+      "pure_fast": {
+        "input_import_us": 2680.573,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 39,
+          "edges": 81,
+          "bytes": 125
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 39,
+          "edges": 81,
+          "bytes": 125
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 44,
+          "edges": 99,
+          "bytes": 148
+        },
+        "multiply_us": 867.786,
+        "product_mod_97_us": 39.459,
+        "checked_odd_divide_us": 32.108,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.674,
+        "shift_divide_us": 931.51,
+        "canonical_divide": {
+          "divide_us": 3190.848,
+          "numerator_stats": {
+            "terms": 4,
+            "nodes": 44,
+            "edges": 99,
+            "bytes": 148
+          },
+          "denominator_stats": {
+            "terms": 2,
+            "nodes": 39,
+            "edges": 81,
+            "bytes": 125
+          },
+          "quotient_stats": {
+            "terms": 2,
+            "nodes": 39,
+            "edges": 81,
+            "bytes": 125
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 181.038,
+        "left_stats": {
+          "bytes": 164,
+          "nodes": 39,
+          "edges": 81
+        },
+        "right_stats": {
+          "bytes": 164,
+          "nodes": 39,
+          "edges": 81
+        },
+        "product_stats": {
+          "bytes": 176,
+          "nodes": 42,
+          "edges": 87
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.82,
+        "product_mod_97_us": 14.892,
+        "structural_divide_us": 2.804,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.392
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 8576.36,
+        "left_stats": {
+          "bytes": 164,
+          "nodes": 39,
+          "edges": 81
+        },
+        "right_stats": {
+          "bytes": 164,
+          "nodes": 39,
+          "edges": 81
+        },
+        "product_stats": {
+          "bytes": 176,
+          "nodes": 42,
+          "edges": 87
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.539,
+        "product_mod_97_us": 38.487,
+        "structural_divide_us": 2.895,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.752
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 7127.142,
+        "left_stats": {
+          "bytes": 164,
+          "nodes": 39,
+          "edges": 81
+        },
+        "right_stats": {
+          "bytes": 164,
+          "nodes": 39,
+          "edges": 81
+        },
+        "product_stats": {
+          "bytes": 176,
+          "nodes": 42,
+          "edges": 87
+        },
+        "product_kind": "mul",
+        "multiply_us": 7328.28,
+        "product_mod_97_us": 16.724,
+        "structural_divide_us": 2.413,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.392
+      }
+    },
+    {
+      "depth": 5,
+      "width": 2,
+      "seed": 342,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 19,
+        "right_recursive_nodes": 19,
+        "shared_recursive_nodes": 12
+      },
+      "pure": {
+        "input_import_us": 3354.501,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 37,
+          "edges": 75,
+          "bytes": 117
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 37,
+          "edges": 75,
+          "bytes": 117
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 45,
+          "edges": 101,
+          "bytes": 151
+        },
+        "multiply_us": 2206.66,
+        "product_mod_97_us": 44.846,
+        "checked_odd_divide_us": 68.061,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.966,
+        "shift_divide_us": 1297.533
+      },
+      "pure_fast": {
+        "input_import_us": 3162.036,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 37,
+          "edges": 75,
+          "bytes": 117
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 37,
+          "edges": 75,
+          "bytes": 117
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 45,
+          "edges": 101,
+          "bytes": 151
+        },
+        "multiply_us": 1016.846,
+        "product_mod_97_us": 45.247,
+        "checked_odd_divide_us": 45.468,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.085,
+        "shift_divide_us": 1168.452
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 192.285,
+        "left_stats": {
+          "bytes": 154,
+          "nodes": 37,
+          "edges": 75
+        },
+        "right_stats": {
+          "bytes": 154,
+          "nodes": 37,
+          "edges": 75
+        },
+        "product_stats": {
+          "bytes": 186,
+          "nodes": 45,
+          "edges": 91
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.834,
+        "product_mod_97_us": 33.65,
+        "structural_divide_us": 3.695,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.512
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 4872.931,
+        "left_stats": {
+          "bytes": 154,
+          "nodes": 37,
+          "edges": 75
+        },
+        "right_stats": {
+          "bytes": 154,
+          "nodes": 37,
+          "edges": 75
+        },
+        "product_stats": {
+          "bytes": 186,
+          "nodes": 45,
+          "edges": 91
+        },
+        "product_kind": "mul",
+        "multiply_us": 6.119,
+        "product_mod_97_us": 15.423,
+        "structural_divide_us": 3.084,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.533
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 6082.794,
+        "left_stats": {
+          "bytes": 154,
+          "nodes": 37,
+          "edges": 75
+        },
+        "right_stats": {
+          "bytes": 154,
+          "nodes": 37,
+          "edges": 75
+        },
+        "product_stats": {
+          "bytes": 186,
+          "nodes": 45,
+          "edges": 91
+        },
+        "product_kind": "mul",
+        "multiply_us": 8808.182,
+        "product_mod_97_us": 19.859,
+        "structural_divide_us": 3.305,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.562
+      }
+    },
+    {
+      "depth": 5,
+      "width": 2,
+      "seed": 20261128,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 17,
+        "right_recursive_nodes": 16,
+        "shared_recursive_nodes": 12
+      },
+      "pure": {
+        "input_import_us": 3103.669,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 33,
+          "edges": 66,
+          "bytes": 104
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 32,
+          "edges": 64,
+          "bytes": 101
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 39,
+          "edges": 87,
+          "bytes": 131
+        },
+        "multiply_us": 2225.688,
+        "product_mod_97_us": 41.301,
+        "checked_odd_divide_us": 38.407,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.884,
+        "shift_divide_us": 1259.166
+      },
+      "pure_fast": {
+        "input_import_us": 2917.403,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 33,
+          "edges": 66,
+          "bytes": 104
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 32,
+          "edges": 64,
+          "bytes": 101
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 39,
+          "edges": 87,
+          "bytes": 131
+        },
+        "multiply_us": 1016.367,
+        "product_mod_97_us": 39.97,
+        "checked_odd_divide_us": 61.851,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.915,
+        "shift_divide_us": 1223.744
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 171.204,
+        "left_stats": {
+          "bytes": 137,
+          "nodes": 33,
+          "edges": 66
+        },
+        "right_stats": {
+          "bytes": 133,
+          "nodes": 32,
+          "edges": 64
+        },
+        "product_stats": {
+          "bytes": 157,
+          "nodes": 38,
+          "edges": 76
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.533,
+        "product_mod_97_us": 16.144,
+        "structural_divide_us": 3.625,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.322
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 5210.612,
+        "left_stats": {
+          "bytes": 137,
+          "nodes": 33,
+          "edges": 66
+        },
+        "right_stats": {
+          "bytes": 133,
+          "nodes": 32,
+          "edges": 64
+        },
+        "product_stats": {
+          "bytes": 157,
+          "nodes": 38,
+          "edges": 76
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.733,
+        "product_mod_97_us": 14.452,
+        "structural_divide_us": 2.714,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.282
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 4429.705,
+        "left_stats": {
+          "bytes": 137,
+          "nodes": 33,
+          "edges": 66
+        },
+        "right_stats": {
+          "bytes": 133,
+          "nodes": 32,
+          "edges": 64
+        },
+        "product_stats": {
+          "bytes": 157,
+          "nodes": 38,
+          "edges": 76
+        },
+        "product_kind": "mul",
+        "multiply_us": 5793.576,
+        "product_mod_97_us": 120.869,
+        "structural_divide_us": 2.534,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.322
+      }
+    },
+    {
+      "depth": 5,
+      "width": 3,
+      "seed": 51,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 121,
+        "right_recursive_nodes": 121,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 38678.558,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 221,
+          "edges": 642,
+          "bytes": 1101
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 221,
+          "edges": 645,
+          "bytes": 1105
+        },
+        "product_stats": {
+          "terms": 9,
+          "nodes": 350,
+          "edges": 1065,
+          "bytes": 1957
+        },
+        "multiply_us": 23185.158,
+        "product_mod_97_us": 142.512,
+        "checked_odd_divide_us": 90.615,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.084,
+        "shift_divide_us": 11043.866
+      },
+      "pure_fast": {
+        "input_import_us": 38836.342,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 221,
+          "edges": 642,
+          "bytes": 1101
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 221,
+          "edges": 645,
+          "bytes": 1105
+        },
+        "product_stats": {
+          "terms": 9,
+          "nodes": 350,
+          "edges": 1065,
+          "bytes": 1957
+        },
+        "multiply_us": 3654.135,
+        "product_mod_97_us": 206.906,
+        "checked_odd_divide_us": 319.653,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.155,
+        "shift_divide_us": 11041.383,
+        "canonical_divide": {
+          "divide_us": 46314.023,
+          "numerator_stats": {
+            "terms": 9,
+            "nodes": 350,
+            "edges": 1065,
+            "bytes": 1957
+          },
+          "denominator_stats": {
+            "terms": 3,
+            "nodes": 221,
+            "edges": 645,
+            "bytes": 1105
+          },
+          "quotient_stats": {
+            "terms": 3,
+            "nodes": 221,
+            "edges": 642,
+            "bytes": 1101
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 1707.581,
+        "left_stats": {
+          "bytes": 1322,
+          "nodes": 221,
+          "edges": 642
+        },
+        "right_stats": {
+          "bytes": 1326,
+          "nodes": 221,
+          "edges": 645
+        },
+        "product_stats": {
+          "bytes": 2237,
+          "nodes": 349,
+          "edges": 1028
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.025,
+        "product_mod_97_us": 82.031,
+        "structural_divide_us": 3.565,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.682
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 74556.386,
+        "left_stats": {
+          "bytes": 1322,
+          "nodes": 221,
+          "edges": 642
+        },
+        "right_stats": {
+          "bytes": 1326,
+          "nodes": 221,
+          "edges": 645
+        },
+        "product_stats": {
+          "bytes": 2237,
+          "nodes": 349,
+          "edges": 1028
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.333,
+        "product_mod_97_us": 60.46,
+        "structural_divide_us": 3.576,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.452
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 71943.842,
+        "left_stats": {
+          "bytes": 1322,
+          "nodes": 221,
+          "edges": 642
+        },
+        "right_stats": {
+          "bytes": 1326,
+          "nodes": 221,
+          "edges": 645
+        },
+        "product_stats": {
+          "bytes": 2237,
+          "nodes": 349,
+          "edges": 1028
+        },
+        "product_kind": "mul",
+        "multiply_us": 466.25,
+        "product_mod_97_us": 64.295,
+        "structural_divide_us": 3.315,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.753
+      }
+    },
+    {
+      "depth": 5,
+      "width": 3,
+      "seed": 342,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 121,
+        "right_recursive_nodes": 121,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 44515.063,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 217,
+          "edges": 635,
+          "bytes": 1089
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 222,
+          "edges": 647,
+          "bytes": 1107
+        },
+        "product_stats": {
+          "terms": 9,
+          "nodes": 350,
+          "edges": 1066,
+          "bytes": 1969
+        },
+        "multiply_us": 28695.131,
+        "product_mod_97_us": 143.653,
+        "checked_odd_divide_us": 105.696,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.125,
+        "shift_divide_us": 10904.558
+      },
+      "pure_fast": {
+        "input_import_us": 37456.654,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 217,
+          "edges": 635,
+          "bytes": 1089
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 222,
+          "edges": 647,
+          "bytes": 1107
+        },
+        "product_stats": {
+          "terms": 9,
+          "nodes": 350,
+          "edges": 1066,
+          "bytes": 1969
+        },
+        "multiply_us": 3669.648,
+        "product_mod_97_us": 135.04,
+        "checked_odd_divide_us": 113.128,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.335,
+        "shift_divide_us": 11488.414
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 1463.689,
+        "left_stats": {
+          "bytes": 1306,
+          "nodes": 217,
+          "edges": 635
+        },
+        "right_stats": {
+          "bytes": 1329,
+          "nodes": 222,
+          "edges": 647
+        },
+        "product_stats": {
+          "bytes": 2250,
+          "nodes": 349,
+          "edges": 1029
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.685,
+        "product_mod_97_us": 72.537,
+        "structural_divide_us": 3.635,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.603
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 82502.354,
+        "left_stats": {
+          "bytes": 1306,
+          "nodes": 217,
+          "edges": 635
+        },
+        "right_stats": {
+          "bytes": 1329,
+          "nodes": 222,
+          "edges": 647
+        },
+        "product_stats": {
+          "bytes": 2250,
+          "nodes": 349,
+          "edges": 1029
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.896,
+        "product_mod_97_us": 61.801,
+        "structural_divide_us": 3.225,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.562
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 71928.395,
+        "left_stats": {
+          "bytes": 1306,
+          "nodes": 217,
+          "edges": 635
+        },
+        "right_stats": {
+          "bytes": 1329,
+          "nodes": 222,
+          "edges": 647
+        },
+        "product_stats": {
+          "bytes": 2250,
+          "nodes": 349,
+          "edges": 1029
+        },
+        "product_kind": "mul",
+        "multiply_us": 421.545,
+        "product_mod_97_us": 66.719,
+        "structural_divide_us": 3.625,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.522
+      }
+    },
+    {
+      "depth": 5,
+      "width": 3,
+      "seed": 20261128,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 121,
+        "right_recursive_nodes": 121,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 38407.832,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 219,
+          "edges": 640,
+          "bytes": 1092
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 215,
+          "edges": 622,
+          "bytes": 1070
+        },
+        "product_stats": {
+          "terms": 9,
+          "nodes": 349,
+          "edges": 1063,
+          "bytes": 1958
+        },
+        "multiply_us": 23451.191,
+        "product_mod_97_us": 137.644,
+        "checked_odd_divide_us": 105.747,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.345,
+        "shift_divide_us": 12428.947
+      },
+      "pure_fast": {
+        "input_import_us": 38023.374,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 219,
+          "edges": 640,
+          "bytes": 1092
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 215,
+          "edges": 622,
+          "bytes": 1070
+        },
+        "product_stats": {
+          "terms": 9,
+          "nodes": 349,
+          "edges": 1063,
+          "bytes": 1958
+        },
+        "multiply_us": 5564.455,
+        "product_mod_97_us": 248.999,
+        "checked_odd_divide_us": 94.881,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.345,
+        "shift_divide_us": 11136.843
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 1359.114,
+        "left_stats": {
+          "bytes": 1311,
+          "nodes": 219,
+          "edges": 640
+        },
+        "right_stats": {
+          "bytes": 1285,
+          "nodes": 215,
+          "edges": 622
+        },
+        "product_stats": {
+          "bytes": 2233,
+          "nodes": 348,
+          "edges": 1026
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.444,
+        "product_mod_97_us": 66.288,
+        "structural_divide_us": 3.585,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.632
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 84324.723,
+        "left_stats": {
+          "bytes": 1310,
+          "nodes": 219,
+          "edges": 639
+        },
+        "right_stats": {
+          "bytes": 1285,
+          "nodes": 215,
+          "edges": 622
+        },
+        "product_stats": {
+          "bytes": 2237,
+          "nodes": 349,
+          "edges": 1028
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.966,
+        "product_mod_97_us": 62.232,
+        "structural_divide_us": 3.715,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.773
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 74780.462,
+        "left_stats": {
+          "bytes": 1310,
+          "nodes": 219,
+          "edges": 639
+        },
+        "right_stats": {
+          "bytes": 1285,
+          "nodes": 215,
+          "edges": 622
+        },
+        "product_stats": {
+          "bytes": 2237,
+          "nodes": 349,
+          "edges": 1028
+        },
+        "product_kind": "mul",
+        "multiply_us": 458.57,
+        "product_mod_97_us": 1152.307,
+        "structural_divide_us": 3.695,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.482
+      }
+    },
+    {
+      "depth": 5,
+      "width": 3,
+      "seed": 51,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 21,
+        "right_recursive_nodes": 24,
+        "shared_recursive_nodes": 19
+      },
+      "pure": {
+        "input_import_us": 17082.164,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 39,
+          "edges": 102,
+          "bytes": 146
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 42,
+          "edges": 111,
+          "bytes": 158
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 50,
+          "edges": 150,
+          "bytes": 205
+        },
+        "multiply_us": 15544.193,
+        "product_mod_97_us": 62.763,
+        "checked_odd_divide_us": 62.713,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.734,
+        "shift_divide_us": 7262.621
+      },
+      "pure_fast": {
+        "input_import_us": 17147.039,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 39,
+          "edges": 102,
+          "bytes": 146
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 42,
+          "edges": 111,
+          "bytes": 158
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 50,
+          "edges": 150,
+          "bytes": 205
+        },
+        "multiply_us": 8104.5,
+        "product_mod_97_us": 64.285,
+        "checked_odd_divide_us": 81.941,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.784,
+        "shift_divide_us": 7243.39,
+        "canonical_divide": {
+          "divide_us": 37229.736,
+          "numerator_stats": {
+            "terms": 7,
+            "nodes": 50,
+            "edges": 150,
+            "bytes": 205
+          },
+          "denominator_stats": {
+            "terms": 3,
+            "nodes": 42,
+            "edges": 111,
+            "bytes": 158
+          },
+          "quotient_stats": {
+            "terms": 3,
+            "nodes": 39,
+            "edges": 102,
+            "bytes": 146
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 257.982,
+        "left_stats": {
+          "bytes": 185,
+          "nodes": 39,
+          "edges": 102
+        },
+        "right_stats": {
+          "bytes": 200,
+          "nodes": 42,
+          "edges": 111
+        },
+        "product_stats": {
+          "bytes": 214,
+          "nodes": 45,
+          "edges": 119
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.465,
+        "product_mod_97_us": 31.915,
+        "structural_divide_us": 3.886,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.412
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 20734.515,
+        "left_stats": {
+          "bytes": 185,
+          "nodes": 39,
+          "edges": 102
+        },
+        "right_stats": {
+          "bytes": 200,
+          "nodes": 42,
+          "edges": 111
+        },
+        "product_stats": {
+          "bytes": 214,
+          "nodes": 45,
+          "edges": 119
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.796,
+        "product_mod_97_us": 29.822,
+        "structural_divide_us": 2.994,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.532
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 21184.075,
+        "left_stats": {
+          "bytes": 185,
+          "nodes": 39,
+          "edges": 102
+        },
+        "right_stats": {
+          "bytes": 200,
+          "nodes": 42,
+          "edges": 111
+        },
+        "product_stats": {
+          "bytes": 214,
+          "nodes": 45,
+          "edges": 119
+        },
+        "product_kind": "mul",
+        "multiply_us": 25245.72,
+        "product_mod_97_us": 26.847,
+        "structural_divide_us": 3.515,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.733
+      }
+    },
+    {
+      "depth": 5,
+      "width": 3,
+      "seed": 342,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 26,
+        "right_recursive_nodes": 28,
+        "shared_recursive_nodes": 24
+      },
+      "pure": {
+        "input_import_us": 16177.957,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 43,
+          "edges": 112,
+          "bytes": 160
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 45,
+          "edges": 118,
+          "bytes": 168
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 55,
+          "edges": 169,
+          "bytes": 229
+        },
+        "multiply_us": 19175.022,
+        "product_mod_97_us": 77.148,
+        "checked_odd_divide_us": 84.318,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.114,
+        "shift_divide_us": 12430.882
+      },
+      "pure_fast": {
+        "input_import_us": 18246.233,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 43,
+          "edges": 112,
+          "bytes": 160
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 45,
+          "edges": 118,
+          "bytes": 168
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 55,
+          "edges": 169,
+          "bytes": 229
+        },
+        "multiply_us": 6037.702,
+        "product_mod_97_us": 77.569,
+        "checked_odd_divide_us": 87.703,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.924,
+        "shift_divide_us": 7354.015
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 270.729,
+        "left_stats": {
+          "bytes": 203,
+          "nodes": 43,
+          "edges": 112
+        },
+        "right_stats": {
+          "bytes": 213,
+          "nodes": 45,
+          "edges": 118
+        },
+        "product_stats": {
+          "bytes": 227,
+          "nodes": 48,
+          "edges": 126
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.413,
+        "product_mod_97_us": 35.831,
+        "structural_divide_us": 4.096,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.502
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 26040.172,
+        "left_stats": {
+          "bytes": 203,
+          "nodes": 43,
+          "edges": 112
+        },
+        "right_stats": {
+          "bytes": 213,
+          "nodes": 45,
+          "edges": 118
+        },
+        "product_stats": {
+          "bytes": 227,
+          "nodes": 48,
+          "edges": 126
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.164,
+        "product_mod_97_us": 31.845,
+        "structural_divide_us": 3.405,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.502
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 23731.541,
+        "left_stats": {
+          "bytes": 203,
+          "nodes": 43,
+          "edges": 112
+        },
+        "right_stats": {
+          "bytes": 213,
+          "nodes": 45,
+          "edges": 118
+        },
+        "product_stats": {
+          "bytes": 227,
+          "nodes": 48,
+          "edges": 126
+        },
+        "product_kind": "mul",
+        "multiply_us": 38937.618,
+        "product_mod_97_us": 31.924,
+        "structural_divide_us": 3.575,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.552
+      }
+    },
+    {
+      "depth": 5,
+      "width": 3,
+      "seed": 20261128,
+      "shared_templates": true,
+      "operand_signs": [
+        -1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 28,
+        "right_recursive_nodes": 26,
+        "shared_recursive_nodes": 24
+      },
+      "pure": {
+        "input_import_us": 19527.636,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 45,
+          "edges": 119,
+          "bytes": 169
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 43,
+          "edges": 113,
+          "bytes": 161
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 54,
+          "edges": 165,
+          "bytes": 224
+        },
+        "multiply_us": 16599.167,
+        "product_mod_97_us": 76.628,
+        "checked_odd_divide_us": 74.044,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.984,
+        "shift_divide_us": 6742.739
+      },
+      "pure_fast": {
+        "input_import_us": 17338.631,
+        "left_stats": {
+          "terms": 3,
+          "nodes": 45,
+          "edges": 119,
+          "bytes": 169
+        },
+        "right_stats": {
+          "terms": 3,
+          "nodes": 43,
+          "edges": 113,
+          "bytes": 161
+        },
+        "product_stats": {
+          "terms": 7,
+          "nodes": 54,
+          "edges": 165,
+          "bytes": 224
+        },
+        "multiply_us": 5325.806,
+        "product_mod_97_us": 337.112,
+        "checked_odd_divide_us": 75.245,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.854,
+        "shift_divide_us": 6472.821
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 240.397,
+        "left_stats": {
+          "bytes": 214,
+          "nodes": 45,
+          "edges": 119
+        },
+        "right_stats": {
+          "bytes": 204,
+          "nodes": 43,
+          "edges": 113
+        },
+        "product_stats": {
+          "bytes": 228,
+          "nodes": 48,
+          "edges": 127
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.333,
+        "product_mod_97_us": 30.843,
+        "structural_divide_us": 3.695,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.392
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 26316.919,
+        "left_stats": {
+          "bytes": 214,
+          "nodes": 45,
+          "edges": 119
+        },
+        "right_stats": {
+          "bytes": 204,
+          "nodes": 43,
+          "edges": 113
+        },
+        "product_stats": {
+          "bytes": 228,
+          "nodes": 48,
+          "edges": 127
+        },
+        "product_kind": "mul",
+        "multiply_us": 12.538,
+        "product_mod_97_us": 33.196,
+        "structural_divide_us": 3.395,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.693
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 26045.159,
+        "left_stats": {
+          "bytes": 214,
+          "nodes": 45,
+          "edges": 119
+        },
+        "right_stats": {
+          "bytes": 204,
+          "nodes": 43,
+          "edges": 113
+        },
+        "product_stats": {
+          "bytes": 228,
+          "nodes": 48,
+          "edges": 127
+        },
+        "product_kind": "mul",
+        "multiply_us": 31966.588,
+        "product_mod_97_us": 31.504,
+        "structural_divide_us": 24.104,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.802
+      }
+    },
+    {
+      "depth": 8,
+      "width": 2,
+      "seed": 51,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 255,
+        "right_recursive_nodes": 255,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 57583.278,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 356,
+          "edges": 798,
+          "bytes": 1542
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 355,
+          "edges": 792,
+          "bytes": 1549
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 611,
+          "edges": 1321,
+          "bytes": 2751
+        },
+        "multiply_us": 21221.487,
+        "product_mod_97_us": 62.247,
+        "checked_odd_divide_us": 69.057,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.265,
+        "shift_divide_us": 10299.077
+      },
+      "pure_fast": {
+        "input_import_us": 60795.315,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 356,
+          "edges": 798,
+          "bytes": 1542
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 355,
+          "edges": 792,
+          "bytes": 1549
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 611,
+          "edges": 1321,
+          "bytes": 2751
+        },
+        "multiply_us": 4695.132,
+        "product_mod_97_us": 56.639,
+        "checked_odd_divide_us": 64.641,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.994,
+        "shift_divide_us": 10127.497,
+        "canonical_divide": {
+          "divide_us": 41916.187,
+          "numerator_stats": {
+            "terms": 4,
+            "nodes": 611,
+            "edges": 1321,
+            "bytes": 2751
+          },
+          "denominator_stats": {
+            "terms": 2,
+            "nodes": 355,
+            "edges": 792,
+            "bytes": 1549
+          },
+          "quotient_stats": {
+            "terms": 2,
+            "nodes": 356,
+            "edges": 798,
+            "bytes": 1542
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 2479.942,
+        "left_stats": {
+          "bytes": 1898,
+          "nodes": 356,
+          "edges": 798
+        },
+        "right_stats": {
+          "bytes": 1904,
+          "nodes": 355,
+          "edges": 792
+        },
+        "product_stats": {
+          "bytes": 3354,
+          "nodes": 613,
+          "edges": 1315
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.393,
+        "product_mod_97_us": 21.65,
+        "structural_divide_us": 3.114,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.722
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 85596.022,
+        "left_stats": {
+          "bytes": 1898,
+          "nodes": 356,
+          "edges": 798
+        },
+        "right_stats": {
+          "bytes": 1904,
+          "nodes": 355,
+          "edges": 792
+        },
+        "product_stats": {
+          "bytes": 3354,
+          "nodes": 613,
+          "edges": 1315
+        },
+        "product_kind": "mul",
+        "multiply_us": 29.662,
+        "product_mod_97_us": 25.065,
+        "structural_divide_us": 3.835,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.752
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 77637.271,
+        "left_stats": {
+          "bytes": 1898,
+          "nodes": 356,
+          "edges": 798
+        },
+        "right_stats": {
+          "bytes": 1904,
+          "nodes": 355,
+          "edges": 792
+        },
+        "product_stats": {
+          "bytes": 3354,
+          "nodes": 613,
+          "edges": 1315
+        },
+        "product_kind": "mul",
+        "multiply_us": 407.871,
+        "product_mod_97_us": 18.576,
+        "structural_divide_us": 3.825,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.472
+      }
+    },
+    {
+      "depth": 8,
+      "width": 2,
+      "seed": 342,
+      "shared_templates": false,
+      "operand_signs": [
+        -1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 255,
+        "right_recursive_nodes": 255,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 62575.386,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 350,
+          "edges": 775,
+          "bytes": 1506
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 357,
+          "edges": 795,
+          "bytes": 1541
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 613,
+          "edges": 1323,
+          "bytes": 2783
+        },
+        "multiply_us": 19446.403,
+        "product_mod_97_us": 59.023,
+        "checked_odd_divide_us": 65.131,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.144,
+        "shift_divide_us": 9621.599
+      },
+      "pure_fast": {
+        "input_import_us": 63557.883,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 350,
+          "edges": 775,
+          "bytes": 1506
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 357,
+          "edges": 795,
+          "bytes": 1541
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 613,
+          "edges": 1323,
+          "bytes": 2783
+        },
+        "multiply_us": 4623.874,
+        "product_mod_97_us": 59.353,
+        "checked_odd_divide_us": 75.115,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.415,
+        "shift_divide_us": 10628.308
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 2302.944,
+        "left_stats": {
+          "bytes": 1856,
+          "nodes": 350,
+          "edges": 775
+        },
+        "right_stats": {
+          "bytes": 1898,
+          "nodes": 357,
+          "edges": 795
+        },
+        "product_stats": {
+          "bytes": 3369,
+          "nodes": 615,
+          "edges": 1317
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.894,
+        "product_mod_97_us": 30.883,
+        "structural_divide_us": 3.325,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.462
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 106808.535,
+        "left_stats": {
+          "bytes": 1856,
+          "nodes": 350,
+          "edges": 775
+        },
+        "right_stats": {
+          "bytes": 1895,
+          "nodes": 357,
+          "edges": 793
+        },
+        "product_stats": {
+          "bytes": 3367,
+          "nodes": 615,
+          "edges": 1315
+        },
+        "product_kind": "mul",
+        "multiply_us": 12.738,
+        "product_mod_97_us": 29.081,
+        "structural_divide_us": 3.976,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.812
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 90672.316,
+        "left_stats": {
+          "bytes": 1856,
+          "nodes": 350,
+          "edges": 775
+        },
+        "right_stats": {
+          "bytes": 1895,
+          "nodes": 357,
+          "edges": 793
+        },
+        "product_stats": {
+          "bytes": 3367,
+          "nodes": 615,
+          "edges": 1315
+        },
+        "product_kind": "mul",
+        "multiply_us": 675.896,
+        "product_mod_97_us": 28.85,
+        "structural_divide_us": 3.485,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.813
+      }
+    },
+    {
+      "depth": 8,
+      "width": 2,
+      "seed": 20261128,
+      "shared_templates": false,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 255,
+        "right_recursive_nodes": 255,
+        "shared_recursive_nodes": 0
+      },
+      "pure": {
+        "input_import_us": 63443.417,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 351,
+          "edges": 783,
+          "bytes": 1523
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 356,
+          "edges": 791,
+          "bytes": 1546
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 611,
+          "edges": 1319,
+          "bytes": 2767
+        },
+        "multiply_us": 20787.772,
+        "product_mod_97_us": 58.832,
+        "checked_odd_divide_us": 72.341,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.085,
+        "shift_divide_us": 10026.797
+      },
+      "pure_fast": {
+        "input_import_us": 63511.403,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 351,
+          "edges": 783,
+          "bytes": 1523
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 356,
+          "edges": 791,
+          "bytes": 1546
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 611,
+          "edges": 1319,
+          "bytes": 2767
+        },
+        "multiply_us": 4457.82,
+        "product_mod_97_us": 58.001,
+        "checked_odd_divide_us": 65.862,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.144,
+        "shift_divide_us": 9928.98
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 2428.39,
+        "left_stats": {
+          "bytes": 1874,
+          "nodes": 351,
+          "edges": 783
+        },
+        "right_stats": {
+          "bytes": 1902,
+          "nodes": 356,
+          "edges": 791
+        },
+        "product_stats": {
+          "bytes": 3370,
+          "nodes": 613,
+          "edges": 1313
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.004,
+        "product_mod_97_us": 16.874,
+        "structural_divide_us": 3.706,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.563
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 81380.949,
+        "left_stats": {
+          "bytes": 1874,
+          "nodes": 351,
+          "edges": 783
+        },
+        "right_stats": {
+          "bytes": 1902,
+          "nodes": 356,
+          "edges": 791
+        },
+        "product_stats": {
+          "bytes": 3370,
+          "nodes": 613,
+          "edges": 1313
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.134,
+        "product_mod_97_us": 18.305,
+        "structural_divide_us": 3.254,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.632
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 90385.554,
+        "left_stats": {
+          "bytes": 1874,
+          "nodes": 351,
+          "edges": 783
+        },
+        "right_stats": {
+          "bytes": 1902,
+          "nodes": 356,
+          "edges": 791
+        },
+        "product_stats": {
+          "bytes": 3370,
+          "nodes": 613,
+          "edges": 1313
+        },
+        "product_kind": "mul",
+        "multiply_us": 460.865,
+        "product_mod_97_us": 166.714,
+        "structural_divide_us": 3.184,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.542
+      }
+    },
+    {
+      "depth": 8,
+      "width": 2,
+      "seed": 51,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 40,
+        "right_recursive_nodes": 43,
+        "shared_recursive_nodes": 38
+      },
+      "pure": {
+        "input_import_us": 22957.369,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 58,
+          "edges": 119,
+          "bytes": 182
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 61,
+          "edges": 125,
+          "bytes": 191
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 65,
+          "edges": 140,
+          "bytes": 210
+        },
+        "multiply_us": 15474.383,
+        "product_mod_97_us": 38.654,
+        "checked_odd_divide_us": 48.168,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.714,
+        "shift_divide_us": 9265.362
+      },
+      "pure_fast": {
+        "input_import_us": 23076.956,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 58,
+          "edges": 119,
+          "bytes": 182
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 61,
+          "edges": 125,
+          "bytes": 191
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 65,
+          "edges": 140,
+          "bytes": 210
+        },
+        "multiply_us": 6856.458,
+        "product_mod_97_us": 45.554,
+        "checked_odd_divide_us": 46.685,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.964,
+        "shift_divide_us": 9575.865,
+        "canonical_divide": {
+          "divide_us": 25717.714,
+          "numerator_stats": {
+            "terms": 4,
+            "nodes": 65,
+            "edges": 140,
+            "bytes": 210
+          },
+          "denominator_stats": {
+            "terms": 2,
+            "nodes": 61,
+            "edges": 125,
+            "bytes": 191
+          },
+          "quotient_stats": {
+            "terms": 2,
+            "nodes": 58,
+            "edges": 119,
+            "bytes": 182
+          },
+          "exact_canonical_match": true
+        }
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 438.093,
+        "left_stats": {
+          "bytes": 240,
+          "nodes": 58,
+          "edges": 119
+        },
+        "right_stats": {
+          "bytes": 252,
+          "nodes": 61,
+          "edges": 125
+        },
+        "product_stats": {
+          "bytes": 264,
+          "nodes": 64,
+          "edges": 131
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.903,
+        "product_mod_97_us": 18.636,
+        "structural_divide_us": 3.264,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.462
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 51831.045,
+        "left_stats": {
+          "bytes": 240,
+          "nodes": 58,
+          "edges": 119
+        },
+        "right_stats": {
+          "bytes": 252,
+          "nodes": 61,
+          "edges": 125
+        },
+        "product_stats": {
+          "bytes": 264,
+          "nodes": 64,
+          "edges": 131
+        },
+        "product_kind": "mul",
+        "multiply_us": 13.328,
+        "product_mod_97_us": 17.565,
+        "structural_divide_us": 3.004,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.502
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 30583.812,
+        "left_stats": {
+          "bytes": 240,
+          "nodes": 58,
+          "edges": 119
+        },
+        "right_stats": {
+          "bytes": 252,
+          "nodes": 61,
+          "edges": 125
+        },
+        "product_stats": {
+          "bytes": 264,
+          "nodes": 64,
+          "edges": 131
+        },
+        "product_kind": "mul",
+        "multiply_us": 37086.841,
+        "product_mod_97_us": 38.677,
+        "structural_divide_us": 3.114,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.682
+      }
+    },
+    {
+      "depth": 8,
+      "width": 2,
+      "seed": 342,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        -1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 38,
+        "right_recursive_nodes": 39,
+        "shared_recursive_nodes": 30
+      },
+      "pure": {
+        "input_import_us": 28553.511,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 56,
+          "edges": 113,
+          "bytes": 174
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 57,
+          "edges": 115,
+          "bytes": 177
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 65,
+          "edges": 141,
+          "bytes": 211
+        },
+        "multiply_us": 19784.744,
+        "product_mod_97_us": 50.555,
+        "checked_odd_divide_us": 55.182,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.844,
+        "shift_divide_us": 10315.669
+      },
+      "pure_fast": {
+        "input_import_us": 28237.884,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 56,
+          "edges": 113,
+          "bytes": 174
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 57,
+          "edges": 115,
+          "bytes": 177
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 65,
+          "edges": 141,
+          "bytes": 211
+        },
+        "multiply_us": 6085.774,
+        "product_mod_97_us": 47.981,
+        "checked_odd_divide_us": 55.422,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.735,
+        "shift_divide_us": 10206.887
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 400.173,
+        "left_stats": {
+          "bytes": 230,
+          "nodes": 56,
+          "edges": 113
+        },
+        "right_stats": {
+          "bytes": 234,
+          "nodes": 57,
+          "edges": 115
+        },
+        "product_stats": {
+          "bytes": 270,
+          "nodes": 66,
+          "edges": 133
+        },
+        "product_kind": "mul",
+        "multiply_us": 8.352,
+        "product_mod_97_us": 24.235,
+        "structural_divide_us": 3.355,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.262
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 22176.857,
+        "left_stats": {
+          "bytes": 230,
+          "nodes": 56,
+          "edges": 113
+        },
+        "right_stats": {
+          "bytes": 234,
+          "nodes": 57,
+          "edges": 115
+        },
+        "product_stats": {
+          "bytes": 270,
+          "nodes": 66,
+          "edges": 133
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.887,
+        "product_mod_97_us": 27.601,
+        "structural_divide_us": 3.335,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.362
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 21679.721,
+        "left_stats": {
+          "bytes": 230,
+          "nodes": 56,
+          "edges": 113
+        },
+        "right_stats": {
+          "bytes": 234,
+          "nodes": 57,
+          "edges": 115
+        },
+        "product_stats": {
+          "bytes": 270,
+          "nodes": 66,
+          "edges": 133
+        },
+        "product_kind": "mul",
+        "multiply_us": 45689.783,
+        "product_mod_97_us": 25.728,
+        "structural_divide_us": 2.854,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.543
+      }
+    },
+    {
+      "depth": 8,
+      "width": 2,
+      "seed": 20261128,
+      "shared_templates": true,
+      "operand_signs": [
+        1,
+        1
+      ],
+      "raw_input_stats": {
+        "left_recursive_nodes": 39,
+        "right_recursive_nodes": 34,
+        "shared_recursive_nodes": 29
+      },
+      "pure": {
+        "input_import_us": 25016.363,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 56,
+          "edges": 113,
+          "bytes": 174
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 50,
+          "edges": 100,
+          "bytes": 155
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 63,
+          "edges": 136,
+          "bytes": 204
+        },
+        "multiply_us": 18206.236,
+        "product_mod_97_us": 43.214,
+        "checked_odd_divide_us": 56.103,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 2.764,
+        "shift_divide_us": 9809.369
+      },
+      "pure_fast": {
+        "input_import_us": 24813.923,
+        "left_stats": {
+          "terms": 2,
+          "nodes": 56,
+          "edges": 113,
+          "bytes": 174
+        },
+        "right_stats": {
+          "terms": 2,
+          "nodes": 50,
+          "edges": 100,
+          "bytes": 155
+        },
+        "product_stats": {
+          "terms": 4,
+          "nodes": 63,
+          "edges": 136,
+          "bytes": 204
+        },
+        "multiply_us": 7606.857,
+        "product_mod_97_us": 43.505,
+        "checked_odd_divide_us": 62.242,
+        "odd_quotient_type": "ExactQuotient",
+        "multiply_back_us": 3.295,
+        "shift_divide_us": 9788.268
+      },
+      "adaptive_without_mining": {
+        "input_conversion_us": 269.569,
+        "left_stats": {
+          "bytes": 230,
+          "nodes": 56,
+          "edges": 113
+        },
+        "right_stats": {
+          "bytes": 205,
+          "nodes": 50,
+          "edges": 100
+        },
+        "product_stats": {
+          "bytes": 254,
+          "nodes": 62,
+          "edges": 125
+        },
+        "product_kind": "mul",
+        "multiply_us": 9.133,
+        "product_mod_97_us": 21.793,
+        "structural_divide_us": 4.006,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.602
+      },
+      "adaptive_packed": {
+        "input_conversion_us": 22039.904,
+        "left_stats": {
+          "bytes": 230,
+          "nodes": 56,
+          "edges": 113
+        },
+        "right_stats": {
+          "bytes": 205,
+          "nodes": 50,
+          "edges": 100
+        },
+        "product_stats": {
+          "bytes": 254,
+          "nodes": 62,
+          "edges": 125
+        },
+        "product_kind": "mul",
+        "multiply_us": 10.666,
+        "product_mod_97_us": 20.871,
+        "structural_divide_us": 3.435,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.522
+      },
+      "adaptive_eager": {
+        "input_conversion_us": 22620.173,
+        "left_stats": {
+          "bytes": 230,
+          "nodes": 56,
+          "edges": 113
+        },
+        "right_stats": {
+          "bytes": 205,
+          "nodes": 50,
+          "edges": 100
+        },
+        "product_stats": {
+          "bytes": 254,
+          "nodes": 62,
+          "edges": 125
+        },
+        "product_kind": "mul",
+        "multiply_us": 41245.951,
+        "product_mod_97_us": 23.425,
+        "structural_divide_us": 3.025,
+        "quotient_kind": "mul",
+        "multiply_back_us": 1.552
+      }
+    }
+  ],
+  "motif_control": {
+    "seed": 51,
+    "terms_in_block": 6,
+    "repetitions": 8,
+    "stride": 512,
+    "results": {
+      "root": {
+        "pure_stats": {
+          "terms": 48,
+          "nodes": 62,
+          "edges": 233,
+          "bytes": 300
+        },
+        "unmined_stats": {
+          "bytes": 362,
+          "nodes": 62,
+          "edges": 233
+        },
+        "packed_stats": {
+          "bytes": 138,
+          "nodes": 27,
+          "edges": 79
+        },
+        "packed_kind": "mul",
+        "pack_us": 18637.355
+      },
+      "nested": {
+        "pure_stats": {
+          "terms": 1,
+          "nodes": 63,
+          "edges": 234,
+          "bytes": 302
+        },
+        "unmined_stats": {
+          "bytes": 365,
+          "nodes": 63,
+          "edges": 234
+        },
+        "packed_stats": {
+          "bytes": 141,
+          "nodes": 28,
+          "edges": 80
+        },
+        "packed_kind": "naf",
+        "pack_us": 16452.689
+      }
+    }
+  },
+  "shared_prefix_control": {
+    "seed": 51,
+    "input_depth": 3,
+    "shared_high_parts": 4,
+    "terms_per_high_part": 32,
+    "raw_term_pairs": 16384,
+    "high_part_pairs": 16,
+    "trials": {
+      "original": {
+        "multiply_us": 4750356.533,
+        "product_stats": {
+          "terms": 2444,
+          "nodes": 2535,
+          "edges": 26497,
+          "bytes": 46599
+        }
+      },
+      "fast": {
+        "multiply_us": 18463.237,
+        "product_stats": {
+          "terms": 2444,
+          "nodes": 2535,
+          "edges": 26497,
+          "bytes": 46599
+        }
+      }
+    }
+  },
+  "independent_wide_control": {
+    "seed": 51,
+    "input_depth": 3,
+    "terms_per_operand": 128,
+    "raw_input_stats": {
+      "left_recursive_nodes": 385,
+      "right_recursive_nodes": 385,
+      "shared_recursive_nodes": 0
+    },
+    "trials": {
+      "original": {
+        "multiply_us": 2442649.251,
+        "product_stats": {
+          "terms": 16384,
+          "nodes": 16994,
+          "edges": 83223,
+          "bytes": 209434
+        }
+      },
+      "fast": {
+        "multiply_us": 245978.914,
+        "product_stats": {
+          "terms": 16384,
+          "nodes": 16994,
+          "edges": 83223,
+          "bytes": 209434
+        }
+      }
+    }
+  },
+  "prime_products": {
+    "id_bits": 129,
+    "sample_seed": 20261128,
+    "sympy_version": "1.14.0",
+    "sampling": "Seeded SymPy isprime rejection sampling of distinct 129-bit odd integers.",
+    "pure": [
+      {
+        "prime_factors": 32,
+        "packed_binary_bytes": 515,
+        "product_stats": {
+          "terms": 1385,
+          "nodes": 1392,
+          "edges": 7527,
+          "bytes": 11171
+        },
+        "interval_median_update_us": 9065.246500000001,
+        "nonmember_query_us": 1834.245,
+        "checked_odd_divide_us": 1563.921,
+        "query_removed_us": 2205.739,
+        "multiply_back_us": 179.197,
+        "quotient_kind": "ExactQuotient"
+      },
+      {
+        "prime_factors": 128,
+        "packed_binary_bytes": 2058,
+        "product_stats": {
+          "terms": 5458,
+          "nodes": 5470,
+          "edges": 33275,
+          "bytes": 55022
+        },
+        "interval_median_update_us": 59980.768,
+        "nonmember_query_us": 9757.2,
+        "checked_odd_divide_us": 8983.859,
+        "query_removed_us": 11756.83,
+        "multiply_back_us": 191.453,
+        "quotient_kind": "ExactQuotient"
+      }
+    ],
+    "pure_fast": [
+      {
+        "prime_factors": 32,
+        "packed_binary_bytes": 515,
+        "product_stats": {
+          "terms": 1385,
+          "nodes": 1392,
+          "edges": 7527,
+          "bytes": 11171
+        },
+        "interval_median_update_us": 7148.796,
+        "nonmember_query_us": 1561.796,
+        "checked_odd_divide_us": 1505.098,
+        "query_removed_us": 2060.874,
+        "multiply_back_us": 175.324,
+        "quotient_kind": "ExactQuotient"
+      },
+      {
+        "prime_factors": 128,
+        "packed_binary_bytes": 2058,
+        "product_stats": {
+          "terms": 5458,
+          "nodes": 5470,
+          "edges": 33275,
+          "bytes": 55022
+        },
+        "interval_median_update_us": 45320.72749999999,
+        "nonmember_query_us": 9018.532,
+        "checked_odd_divide_us": 9257.095,
+        "query_removed_us": 14180.81,
+        "multiply_back_us": 205.795,
+        "quotient_kind": "ExactQuotient"
+      }
+    ],
+    "adaptive_without_mining": [
+      {
+        "prime_factors": 32,
+        "packed_expanded_bytes_upper_bound": 516,
+        "product_stats": {
+          "bytes": 2950,
+          "nodes": 193,
+          "edges": 1839
+        },
+        "product_kind": "mul",
+        "product_tree_height": 5,
+        "interval_median_input_us": 284.6165,
+        "interval_median_update_us": 13.264,
+        "nonmember_query_us": 512.108,
+        "explicit_factor_list_query_us": 8.172,
+        "known_factor_divide_us": 26.429,
+        "query_removed_us": 437.448,
+        "multiply_back_us": 37.065,
+        "quotient_kind": "mul"
+      },
+      {
+        "prime_factors": 128,
+        "packed_expanded_bytes_upper_bound": 2064,
+        "product_stats": {
+          "bytes": 10063,
+          "nodes": 385,
+          "edges": 6269
+        },
+        "product_kind": "mul",
+        "product_tree_height": 7,
+        "interval_median_input_us": 260.0655,
+        "interval_median_update_us": 18.342,
+        "nonmember_query_us": 1776.742,
+        "explicit_factor_list_query_us": 25.297,
+        "known_factor_divide_us": 27.31,
+        "query_removed_us": 1868.157,
+        "multiply_back_us": 32.177,
+        "quotient_kind": "mul"
+      },
+      {
+        "prime_factors": 512,
+        "packed_expanded_bytes_upper_bound": 8256,
+        "product_stats": {
+          "bytes": 38684,
+          "nodes": 1153,
+          "edges": 24041
+        },
+        "product_kind": "mul",
+        "product_tree_height": 9,
+        "interval_median_input_us": 258.83349999999996,
+        "interval_median_update_us": 23.174999999999997,
+        "nonmember_query_us": 7459.242,
+        "explicit_factor_list_query_us": 97.364,
+        "known_factor_divide_us": 43.244,
+        "query_removed_us": 7274.317,
+        "multiply_back_us": 43.624,
+        "quotient_kind": "mul"
+      },
+      {
+        "prime_factors": 2048,
+        "packed_expanded_bytes_upper_bound": 33024,
+        "product_stats": {
+          "bytes": 153049,
+          "nodes": 4225,
+          "edges": 94995
+        },
+        "product_kind": "mul",
+        "product_tree_height": 11,
+        "interval_median_input_us": 262.634,
+        "interval_median_update_us": 28.682499999999997,
+        "nonmember_query_us": 30127.296,
+        "explicit_factor_list_query_us": 370.76,
+        "known_factor_divide_us": 95.492,
+        "query_removed_us": 32635.292,
+        "multiply_back_us": 79.498,
+        "quotient_kind": "mul"
+      },
+      {
+        "prime_factors": 8192,
+        "packed_expanded_bytes_upper_bound": 132096,
+        "product_stats": {
+          "bytes": 610652,
+          "nodes": 16513,
+          "edges": 378523
+        },
+        "product_kind": "mul",
+        "product_tree_height": 13,
+        "interval_median_input_us": 260.506,
+        "interval_median_update_us": 33.635000000000005,
+        "nonmember_query_us": 122383.953,
+        "explicit_factor_list_query_us": 1528.445,
+        "known_factor_divide_us": 197.683,
+        "query_removed_us": 134325.419,
+        "multiply_back_us": 114.669,
+        "quotient_kind": "mul"
+      }
+    ],
+    "adaptive_packed": [
+      {
+        "prime_factors": 32,
+        "packed_expanded_bytes_upper_bound": 516,
+        "product_stats": {
+          "bytes": 3002,
+          "nodes": 314,
+          "edges": 1665
+        },
+        "product_kind": "mul",
+        "product_tree_height": 5,
+        "interval_median_input_us": 12138.945,
+        "interval_median_update_us": 17.987000000000002,
+        "nonmember_query_us": 499.82,
+        "explicit_factor_list_query_us": 8.303,
+        "known_factor_divide_us": 21.402,
+        "query_removed_us": 513.951,
+        "multiply_back_us": 17.916,
+        "quotient_kind": "mul"
+      }
+    ]
+  }
+}

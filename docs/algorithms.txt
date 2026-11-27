@@ -1,0 +1,154 @@
+Adaptive recursive arithmetic
+=============================
+
+The original research asks whether exact reachability labels
+formed from products of distinct 129-bit prime IDs can stay compact during
+arithmetic. Synthetic inputs now include independently random recursively
+signed exponents, varying depth and width, and inputs with genuine sharing.
+The only ordinary integers used by the benchmarks are bounded fixtures,
+local coordinates, counts and residues. No represented product is expanded.
+
+Canonical arithmetic
+--------------------
+
+similarity_kernel.multiply_fast(circuit, a, b) returns exactly the same
+pure signed hereditary base-2 marking as Circuit.multiply. It splits a
+recursive exponent as H + h, where H consists of its signed digits at
+positions >= 64 and h is a bounded signed integer formed from lower digits.
+The split is exact. For groups with H and K the algorithm computes H+K
+once, convolves bounded offsets h+k and accumulates signed coefficients.
+If several group pairs produce the same H+K, their contributions combine.
+For unrelated H and K there is another shortcut. Encode the signed high
+support as temporary masks over the finite observed coordinates. An
+addition can cancel opposite signs by masks. A same-sign collision or
+new actual adjacency triggers exact recursive carry reduction. This work
+depends on the circuit's occupied coordinates, even when their numerical
+positions are towers.
+
+If normalized local offsets have magnitude below 2^62, they are separated
+from every high position by a vacancy. Distinct high parts differ by at
+least 2^64. Thus their local offsets cannot touch across a group boundary,
+and concatenating the signed markings yields the exact canonical result.
+The general carry reducer handles the other cases. For sufficiently
+dense and bounded ordinary spans, NumPy convolves signed coefficient
+arrays of at most 32,768 combined positions using exact int64 arithmetic.
+A coefficient's magnitude is at most the shorter span, so the arithmetic
+has a wide safety margin. The arrays depend on the capped span, not the
+absolute position. Changing a common exponent by a tower-size shift does
+not make an array bigger.
+
+quotient_kernel.divide_fast(circuit, N, D, max_terms=256) consumes only
+canonical inputs. It generates the exact NAF quotient most-significant
+digit first, with either sign of numerator or divisor. Let R be the
+absolute residual and let k=floor(log2(R/abs(D))). The symbolic bit
+lengths plus a shifted comparison determine k. A positive NAF whose
+largest occupied position is k can be at most floor(2^(k+2)/3). Thus
+compare 3R to abs(D)*2^(k+2) to choose leading position k or k+1.
+Subtract the selected shifted divisor, keep the residual sign, and
+repeat. A comparison can stream the descending signed terms and stop
+once their leading difference outweighs every remaining tail. No
+division step visits a vacant binary position. An exact quotient
+takes one iteration per emitted term. Iteration work still depends on
+the residual and divisor DAGs. A smaller nonzero residual than the
+divisor proves inexactness. A term-budget exception leaves integrality
+undecided, and a power-of-two divisor has a direct shift path.
+
+Representation search and retained products
+-------------------------------------------
+
+Adaptive.view imports the pure signed DAG. Adaptive.pack recursively
+visits its exponent subgraphs and considers exact alternatives.
+
+* Pull out the minimum common power. E plus each local offset becomes
+  one shared E and one relative pattern.
+* Compare blocks by their consecutive exact exponent gaps and signs
+  relative to the first sign. Matching signatures give identical blocks
+  up to shift and an overall sign. A common block can be stored once
+  and multiplied by a signed marking of its translations.
+* Check gap-based partitions, whole-pattern periods and selected
+  disjoint interior motifs. If translations form an arithmetic
+  progression with constant sign, replace them with a geometric node.
+  Repeated factors can be folded into a power node.
+* Measure the whole reachable DAG in the actual binary format. Keep
+  literal encoding as a candidate. Also try mixed literal/rewritten
+  child encodings when up to six children differ, since a locally
+  smaller child can destroy sharing elsewhere in its parent.
+
+These are exact value rewrites. They select a minimum among the
+encodings actually examined, with finite search. rounds tunes the
+same-level exploration on new candidates. Every original exponent
+depth is traversed bottom-up. An unlimited guarantee of smallest
+circuit under an arbitrary rewrite grammar would require a separate
+theorem. Even exact partition into the fewest unit-cost disjoint
+arithmetic-progression blocks is NP-complete. Doubling the positions
+maps that problem to all-positive nonadjacent power supports.
+https://eprints.cs.vt.edu/archive/00000162/
+
+Adaptive.multiply defaults to a shared balanced product tree and applies
+exact structural rules. For example, G(x,m)G(x^m,n)=G(x,mn). An optional
+max_pairs budget tries canonicalization and returns the smaller encoded
+candidate. Multiply can therefore preserve provenance for subsequent
+updates, or explicitly produce pure markings via multiply_fast. The
+former moves canonicalization cost out of the update. It still needs
+to process the retained factors during a general residue query.
+
+Adaptive.divide cancels a known stored factor, recognizes translated
+copies and geometric factors, attempts a canonical exact quotient, or
+keeps a checked quotient gate for an explicit divisor. Within a
+geometric node, an exact factor of the term count reduces to a series
+at multiplied stride. Shift-only quotients use exponent differences.
+A bound can stop canonical quotient search. For an unrelated huge
+implicit divisor beyond the bound, the program needs structural
+divisibility evidence or an explicit divisor. A supported explicit
+divisor is checked with bounded modular arithmetic. Lifted moduli
+can grow when quotients accumulate. Large odd moduli on deep towers
+may require a caller-supplied, validated period for 2. This does not
+affect ordinary exponent positions in the sampled prime workload.
+
+Adaptive.encode emits the shared topological record format H2A1.
+Adaptive.decode round-trips data emitted by this kernel and validates
+record structure and references. It uses arithmetic facts certified
+during construction, so the format is intended for trusted kernel
+outputs. Exact rediscovery of arithmetic facts from untrusted records
+is a different operation. Signed markings and their adaptive forms
+have separate encodings, so within-format ablations isolate motif
+search from wire-format differences.
+
+Reading the benchmarks
+----------------------
+
+The deep benchmark verifies input and output residues against a separate
+oracle that directly finds the powers-of-two residue cycle. Pure old
+and new outputs are compared byte for byte. The shared-prefix wide
+control has 128 terms per operand. Its randomized local supports share
+four high components, so 16 high group sums replace 16,384 independent
+recursive additions. The independent wide control has the same root
+width and independently generated recursive branches. A motif-only
+control injects a repeated signed shape at the root and inside an
+exponent to isolate recursive rewrite behavior. Standard random trees
+do not acquire an injected motif.
+
+Each quotient benchmark trial loads only numerator and divisor
+encodings into a fresh arena. It compares the recovered quotient's
+entire canonical encoding with the fixture's quotient. The deep
+benchmark also checks canonical quotient recovery on twelve random cases.
+
+The 129-bit ID benchmark tests updates, member and outsider queries,
+exact known-factor removal, false removal, and reinsertion. At 8,192
+factors the logical product has over one million bits. The tree form
+stores factor structure explicitly. Its timings must be interpreted
+together with residue time and storage, and compared with the explicit
+factor-fold and inferred packed-binary sizes. Packing each prime
+individually may make the combined product larger if it loses common
+exponent subgraphs shared across IDs.
+
+Open questions
+--------------
+
+For pure signed arithmetic use the benchmark's independent wide case as
+the stress test. For alternative grammar compression use the motif and
+nested controls. For the original reachability application keep the
+known-factor update and the outsider query separately timed. Shared
+serialization across a collection of labels and sharing-aware rewrite
+choices across multiple roots remain unmeasured. The membership delta
+still comes from the graph layer when an edge changes.
