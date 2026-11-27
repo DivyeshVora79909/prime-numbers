@@ -3,7 +3,8 @@
 import unittest
 from random import Random
 
-from symbolic_primes.symbolic import Circuit, ExactQuotient, Geometric, exact_divide, residue
+from symbolic_primes.similarity_kernel import multiply_fast
+from symbolic_primes.symbolic import Circuit, ExactQuotient, Geometric, _encode_rows, exact_divide, residue
 
 
 class CircuitTests(unittest.TestCase):
@@ -55,6 +56,38 @@ class CircuitTests(unittest.TestCase):
         self.assertIs(c.bit_length(product), twice_exponent)
         self.assertIs(exact_divide(c, c.multiply(product, x), x), product)
         self.assertEqual(c.stats(product), {"terms": 2, "nodes": 9, "edges": 12, "bytes": 26})
+
+    def test_compare_encode_and_multiply_deep_towers(self):
+        c = self.c
+        first, second = c.one, c.integer(3)
+        height = 1_250
+        for _ in range(height):
+            first, second = c.power(first), c.power(second)
+        self.assertLess(c.compare(first, second), 0)
+        self.assertGreater(c.compare(c.subtract(c.zero, first), c.subtract(c.zero, second)), 0)
+        chain = [()] + [((i, 1),) for i in range(height + 1)]
+        self.assertEqual(c.encode(first), _encode_rows(chain))
+
+        x = c.power(first)
+        twice_first = c.power(c.add(first.terms[0][0], c.one))
+        square = c.power(twice_first)
+        self.assertIs(multiply_fast(c, x, x), square)
+        product = multiply_fast(c, c.subtract(x, c.one), c.add(x, c.one))
+        self.assertIs(product, c.subtract(square, c.one))
+
+    def test_increment_carries_and_deep_branching_exponents(self):
+        c = self.c
+        alternating = sum(1 << i for i in range(0, 260, 2))
+        for n in (alternating, -alternating, (1 << 260) - 1, -(1 << 260) - 1):
+            self.assertIs(c.add(c.integer(n), c.one), c.integer(n + 1))
+
+        value = c.integer(16)
+        two, three = c.integer(2), c.integer(3)
+        for _ in range(500):
+            exponent = value
+            value = c.add(c.power(exponent), c.power(c.add(exponent, two)))
+        expected = c.add(c.power(c.add(exponent, c.one)), c.power(c.add(exponent, three)))
+        self.assertIs(multiply_fast(c, value, two), expected)
 
     def test_tower_division_and_noninvertible_residues(self):
         c = self.c

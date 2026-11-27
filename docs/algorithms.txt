@@ -53,6 +53,86 @@ the residual and divisor DAGs. A smaller nonzero residual than the
 divisor proves inexactness. A term-budget exception leaves integrality
 undecided, and a power-of-two divisor has a direct shift path.
 
+Whole-graph signed storage
+--------------------------
+
+optimize_storage minimizes serialized H2N1 bytes. Its search allows one
+definition per reachable integer, at most one signed digit per exponent
+in each definition, and any acyclic arrangement. Digits are sorted by
+exponent, and rows are numbered in the same depth-first postorder as
+Circuit.encode. Arithmetic continues to use canonical, nonadjacent
+digits. decode_storage normalizes each stored row as it reads it.
+
+For a row, let c be the canonical digit, k the incoming carry, and d
+the proposed digit at one position. The outgoing carry is (c+k-d)/2.
+If c+k is even, d must be zero. If it is odd, either sign is valid.
+The search skips vacant positions when the carry is zero. Continuing a
+carry through vacant positions consumes one digit at each step, so a
+finite term budget bounds the enumeration even at tower-size positions.
+
+The search assigns rows jointly. An exponent used by multiple rows
+requires just one definition. A nonzero row always needs its lowest
+canonical exponent because that position is fixed by divisibility by
+two. The lower bound charges each required row, its minimum signed
+digit count, and unavoidable multi-byte reference indices. Complete
+graphs are scored by serializing them. The incumbent gives a finite
+ceiling on rows and digits. If every cheaper branch is ruled out, that
+incumbent is byte-optimal within the format described above.
+
+For a root with many ordinary exponent positions, a bounded dynamic
+program can prove a byte minimum without enumerating whole graphs.
+It groups possible sets of small exponent nodes by their first missing
+node. An optimistic cost can rule out an entire group. It charges
+each of those definitions once, and each higher root position for
+its edge and at least the cost of defining that position. A carry
+recurrence finds the cheapest signed root allowed by those costs.
+The bound allows extra sharing and omits some overhead, so an actual
+encoding attaining the bound certifies a minimum. All reachable
+indices from 64 through the last non-root index need at least one
+multi-byte reference. If equality would assign a repeatedly used node
+a late index, checking the possible depth-first prefixes can raise
+the bound by another byte. The shortcut uses bounded digit columns
+through position 8,192, with a density check for wide inputs. Each
+tested group charges one state. The wire-layout heuristic tries using
+frequently referenced exponent nodes earlier. It scores changes using
+the first 64 row IDs and checks the winning candidate's actual bytes.
+
+When every improving graph must use one-byte references, its size is
+additive in its rows and edges. The solver processes exponent values
+in descending order and remembers the cheapest prefix for each set of
+remaining definitions. A carry dynamic program bounds each row's
+remaining cost. Sparse inputs can skip entire gaps, including gaps
+whose lengths are represented recursively. Outside these cases the
+general joint search can still have combinatorial growth.
+
+For the example factors 943433720027638044163815075978910058741 and
+705383844795881156131636713278929157563 the respective minima are 233
+and 213 bytes. Their canonical product uses 531 bytes. Its smallest
+H2N1 graph uses 496. The root relaxation permits 495 only when every
+small node from 0 through 8 exists. In a graph attaining that bound,
+node 8 would have at least 13 incoming edges and at least 66 nodes
+would be numbered ahead of it. That conflicts with the one-byte cost
+assumed for all but one of its references. An actual 496-byte encoding
+attains the resulting lower bound.
+
+For example, 40 = 2^3 + 2^5 can use 3 = 2^1 + 1 and
+5 = 2^3 - 2^1 - 1. Expanding 5 to three terms allows the graph to
+share the existing 3 and dispense with the node for 2. The whole
+encoding drops from 19 bytes to 18. The same search changes signed
+rows inside exponents and at the root.
+
+The default limits the search to 2,048 states and targets a certified
+1% gap. The cost per state depends on the input graph and the digit
+span. If a completed lower bound is L and the best encoding has U
+bytes, the actual excess over the optimum is between 0 and U-L.
+The result reports L as lower_bound_bytes and U-L as max_extra_bytes.
+Only completed lower bounds contribute. Exhausting the budget returns
+the incumbent even when its gap exceeds the target. An unlimited
+search defaults to a zero gap and can take combinatorial time.
+The proof covers this signed-digit format with its prescribed row
+ordering. Adaptive algebraic nodes and packed binary have separate
+encoding rules.
+
 Representation search and retained products
 -------------------------------------------
 

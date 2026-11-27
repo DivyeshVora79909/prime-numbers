@@ -22,22 +22,48 @@ def _compare(a: Signed, b: Signed) -> int:
         return 0
     if a._small is not None and b._small is not None:
         return (a._small > b._small) - (a._small < b._small)
+    parents = []
     i, j = len(a.terms) - 1, len(b.terms) - 1
-    while i >= 0 and j >= 0:
-        x, sx = a.terms[i]
-        y, sy = b.terms[j]
-        order = _compare(x, y)
-        if order:
-            return sx if order > 0 else -sy
-        if sx != sy:
-            return sx - sy
-        i -= 1
-        j -= 1
-    if i >= 0:
-        return a.terms[i][1]
-    if j >= 0:
-        return -b.terms[j][1]
-    return 0
+    while True:
+        while i >= 0 and j >= 0:
+            x, sx = a.terms[i]
+            y, sy = b.terms[j]
+            if x is not y:
+                if x._small is None or y._small is None:
+                    parents.append((a, b, i, j))
+                    a, b = x, y
+                    i, j = len(x.terms) - 1, len(y.terms) - 1
+                    continue
+                if x._small != y._small:
+                    order = sx if x._small > y._small else -sy
+                    break
+            if sx != sy:
+                order = sx - sy
+                break
+            i -= 1
+            j -= 1
+        else:
+            order = 0
+            if i >= 0:
+                order = a.terms[i][1]
+            elif j >= 0:
+                order = -b.terms[j][1]
+
+        # Propagate the exponent comparison back to its signed parent terms.
+        # Equal terms resume the parent's comparison at the next lower digit.
+        while parents:
+            a, b, i, j = parents.pop()
+            sx, sy = a.terms[i][1], b.terms[j][1]
+            if order:
+                order = sx if order > 0 else -sy
+            elif sx != sy:
+                order = sx - sy
+            else:
+                i -= 1
+                j -= 1
+                break
+        else:
+            return order
 
 
 def _naf(coefficients, successor):
@@ -49,6 +75,9 @@ def _naf(coefficients, successor):
         coefficient = coefficients.pop(exponent)
         if not coefficient:
             continue
+        if not queue and coefficient in (-1, 1):
+            yield exponent, coefficient
+            return
         following = successor(exponent)
         digit = 0
         if coefficient % 2:
@@ -77,6 +106,25 @@ def _encode_rows(rows) -> bytes:
         for child, digit in row:
             _varint(data, 2 * child + (digit < 0))
     return bytes(data)
+
+
+def _encode_graph_rows(root, row_for):
+    """Number each shared node after its children, in signed-row order."""
+    indices = {}
+    rows = []
+    stack = [(root, False)]
+    while stack:
+        node, visited = stack.pop()
+        if node in indices:
+            continue
+        terms = row_for(node)
+        if visited:
+            indices[node] = len(rows)
+            rows.append([(indices[exponent], digit) for exponent, digit in terms])
+        else:
+            stack.append((node, True))
+            stack.extend((exponent, False) for exponent, _ in reversed(terms))
+    return rows
 
 
 class Circuit:
@@ -150,7 +198,34 @@ class Circuit:
         self._check(a, b)
         if a._small is not None and b._small is not None:
             return self.integer(a._small + b._small)
+        if a is self.one or b is self.one:
+            return self._successor(b if a is self.one else a)
         return self._combine(a, b, 1)
+
+    def _successor(self, value: Signed) -> Signed:
+        """Carry a unit through the affected low digits, preserving the suffix."""
+        terms = value.terms
+        index = bit = 0
+        carry = 1
+        position = self.zero
+        prefix = []
+        while carry:
+            coefficient = carry
+            if index < len(terms) and terms[index][0] is position:
+                coefficient += terms[index][1]
+                index += 1
+            bit += 1
+            following = self.integer(bit)
+            digit = 0
+            if coefficient % 2:
+                next_digit = 0
+                if index < len(terms) and terms[index][0] is following:
+                    next_digit = terms[index][1]
+                digit = 2 - (coefficient + 2 * next_digit) % 4
+                prefix.append((position, digit))
+            carry = (coefficient - digit) // 2
+            position = following
+        return self._intern(tuple(prefix) + terms[index:])
 
     def subtract(self, a: Signed, b: Signed) -> Signed:
         self._check(a, b)
@@ -209,18 +284,7 @@ class Circuit:
 
     def _encoding(self, value: Signed):
         self._check(value)
-        indices = {}
-        rows = []
-
-        def visit(node):
-            if node not in indices:
-                row = [(visit(exponent), digit) for exponent, digit in node.terms]
-                indices[node] = len(rows)
-                rows.append(row)
-            return indices[node]
-
-        visit(value)
-        return rows
+        return _encode_graph_rows(value, lambda node: node.terms)
 
     def encode(self, value: Signed) -> bytes:
         """Encode a pure DAG as bottom-up varint rows. The last row is the root."""

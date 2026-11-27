@@ -40,6 +40,34 @@ restored = adaptive.decode(adaptive.encode(packed))
 assert adaptive.residue(restored, 97) == adaptive.residue(packed, 97)
 ```
 
+## Storage optimization
+
+`optimize_storage(circuit, value)` starts with the canonical recursive
+encoding and keeps whole-graph byte savings. The deterministic default
+allows 2,048 search states and aims to stop within 1% of a proved lower
+bound. If the budget expires first, the result still decodes exactly.
+`data` holds the bytes, `max_extra_bytes` bounds how much smaller any
+valid encoding could be, and `optimal` reports a proved minimum.
+`decode_storage(circuit, data)` restores the value for arithmetic. Use
+`target_gap_percent=0` to pursue an exact proof within a budget, or
+`max_states=None` for an unlimited exact search. [Algorithm and proof scope](docs/algorithms.txt#L56)
+
+`multiply_storage` accepts saved H2N1 bytes or canonical operands from the
+given circuit. It multiplies them symbolically, then optimizes the product.
+With the same budget it returns the same bytes as optimizing a direct
+construction of the product. Check `optimal` for the minimum-size proof.
+
+```python
+from symbolic_primes import Circuit, multiply_storage, optimize_storage
+
+c = Circuit()
+left = optimize_storage(c, c.integer(16))
+right = optimize_storage(c, c.integer(33))
+product = multiply_storage(c, left.data, right.data)
+assert product.optimal
+assert product.data == optimize_storage(c, c.integer(528)).data
+```
+
 ## Benchmarks
 
 Install the benchmark extras to include the prime-product workload and the optional NumPy acceleration.

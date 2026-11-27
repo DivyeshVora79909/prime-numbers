@@ -48,3 +48,30 @@ The workload adds distinct 129-bit IDs sampled with SymPy's `isprime` predicate.
 | 8,192 | Factor tree | 610,652 B | ≤132,096 B | 33.64 µs | 197.68 µs | 122.38 ms |
 
 The packed-binary size is inferred from the leading digits at 128 IDs and bounded by the total input bit lengths at 8,192 IDs. The factor tree divides by removing a retained factor. The signed lanes check divisibility and retain a quotient expression. At 8,192 IDs, the median factor conversion took 260.51 µs and the explicit factor-list reference query took 1.53 ms. The tree makes updates cheaper by retaining factors, which it then evaluates during general residue queries.
+
+## Bounded recursive storage
+
+A separate local run used the default 2,048-state budget and 1% target.
+With Python 3.12.8 and one `Random(20261128)` generator, it sampled eight
+ordinary odd integers at each width in ascending order using
+`rng.getrandbits(w) | (1 << (w - 1)) | 1`. Each value started in a fresh
+circuit. Timings cover optimization, with conversion and round-trip
+verification outside the timer. Savings compare against the canonical
+recursive encoding. The gap is an upper bound on the remaining possible
+savings in the same H2N1 format.
+
+| Input bits | Median optimization | Median byte savings | Largest certified gap in bytes | Inputs within target |
+| ---: | ---: | ---: | ---: | ---: |
+| 128 | 2.9 ms | 2.20% | 3 | 6/8 |
+| 256 | 5.0 ms | 1.84% | 3 | 8/8 |
+| 512 | 14.2 ms | 6.37% | 6 | 8/8 |
+| 1,024 | 61.4 ms | 10.12% | 7 | 8/8 |
+| 2,048 | 101.3 ms | 9.57% | 3 | 8/8 |
+| 4,096 | 183.5 ms | 12.91% | 7 | 8/8 |
+| 8,192 | 337.7 ms | 12.53% | 10 | 8/8 |
+
+All 56 encodings shrank and decoded exactly. The solver proved 21
+minima. The two 128-bit inputs that reached the state limit had a
+largest certified relative gap of about 1.36%. In the separate mixed
+tower fixture with six repeated blocks and three irregular terms, the
+memoized solver proved the 148-byte minimum in 536 states.
