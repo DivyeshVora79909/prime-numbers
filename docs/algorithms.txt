@@ -53,6 +53,34 @@ the residual and divisor DAGs. A smaller nonzero residual than the
 divisor proves inexactness. A term-budget exception leaves integrality
 undecided, and a power-of-two divisor has a direct shift path.
 
+Native arithmetic on bounded coordinates
+----------------------------------------
+
+The optional Rust extension accepts buffers with one byte per ordinary
+base-two position (0, +1 or -1), least significant first. The dispatch
+checks density and span before allocating, with an 8,388,608-position
+limit for the dense multiplication input convolution. Very large gaps
+and tower exponents keep their recursive representation. A tower with
+many nearby offsets can still use a native convolution within a group.
+Addition and subtraction align the two rows, then use a carry and one
+column of lookahead to emit nonadjacent signed digits in a linear scan.
+
+Multiplication packs short blocks into machine integers. It uses direct
+convolution for small or narrow operands. For two wide operands it uses
+an exact number-theoretic transform, choosing the block width so each
+signed coefficient can be recovered uniquely modulo 998244353. For
+n transform points this takes O(n log n) arithmetic and O(n) space.
+Both paths normalize the product back to a canonical signed row.
+
+For an ordinary dense row, a residue query reads 64 magnitude bits at
+a time and reduces the running remainder after each word. Exact division
+uses the same traversal to emit quotient words, recodes them into signed
+digits and checks the remainder and digit budget. The running remainder
+is smaller than the divisor. A fixed-size divisor gives linear work in
+the row span. A general tower uses the recursive algorithms above.
+For stored bytes, the decoder reads and validates the H2N1 graph before
+the arithmetic. All three operations work without the list of primes.
+
 Whole-graph signed storage
 --------------------------
 
@@ -96,6 +124,20 @@ through position 8,192, with a density check for wide inputs. Each
 tested group charges one state. The wire-layout heuristic tries using
 frequently referenced exponent nodes earlier. It scores changes using
 the first 64 row IDs and checks the winning candidate's actual bytes.
+
+For dense roots with at least 8,192 canonical terms, a second carry DP
+charges each selected position e a cost of 4 + NAF_weight(e). It uses
+two carry states per position. With bookkeeping for header and reference
+widths, its minimum gives a lower bound covering all recursive depths.
+The candidate rewrites a low prefix above the trailing zeros so that
+low exponent definitions receive short references. If the canonical
+root could tie or beat that file, the optimizer also prices its actual
+encoding. This pass costs one search state. The DP runs in linear time
+and space in the coordinate span. Producing the H2N1 file also visits
+the selected exponents' definitions and writes their references. The
+general search continues when a requested gap or proof still needs work
+and the budget permits it. The full derivation of the wide bound, along
+with the fourth reference-width correction, is in the prime-access reports.
 
 When every improving graph must use one-byte references, its size is
 additive in its rows and edges. The solver processes exponent values

@@ -3,11 +3,26 @@
 from heapq import merge
 from operator import itemgetter
 
-from .symbolic import Circuit, Signed
+from . import _accelerator
+from .symbolic import Circuit, Signed, _bounded_integer
 
 
 class QuotientWorkLimit(RuntimeError):
     """The requested quotient digit budget was exhausted."""
+
+
+def _divide_dense(row, positive_divisor, max_terms):
+    """Return signed quotient bytes or defer an ambiguous inexact budget boundary."""
+    divisor = positive_divisor.to_bytes((positive_divisor.bit_length() + 7) // 8, "little")
+    try:
+        result = _accelerator.native.dense_divide(row, divisor, min(max_terms, len(row) + 2))
+    except OverflowError:
+        raise QuotientWorkLimit(f"quotient exceeded {max_terms} signed digits") from None
+    except NotImplementedError:
+        return None
+    if result is None:
+        raise ValueError("division is not exact")
+    return result
 
 
 def _negate(circuit, value):
@@ -98,6 +113,19 @@ def divide_fast(
         if len(quotient.terms) > max_terms:
             raise QuotientWorkLimit(f"quotient exceeded {max_terms} signed digits")
         return quotient if denominator_sign > 0 else _negate(circuit, quotient)
+
+    if _accelerator.native is not None:
+        highest = denominator.terms[-1][0]._small
+        if highest is not None and highest <= 511:
+            row = _accelerator.dense_row(numerator, min_terms=8)
+            if row is not None:
+                magnitude = abs(_bounded_integer(denominator, 512))
+                digits = _divide_dense(row, magnitude, max_terms)
+                if digits is not None:
+                    return circuit._from_small_positions(
+                        (i, denominator_sign if d == 1 else -denominator_sign)
+                        for i, d in enumerate(digits) if d
+                    )
 
     numerator_sign = numerator.terms[-1][1]
     remainder = numerator if numerator_sign > 0 else _negate(circuit, numerator)

@@ -1,12 +1,17 @@
 """Read signed-power storage rows into the canonical arithmetic circuit."""
 
 from .symbolic import Circuit, Signed
+from . import _accelerator
 
 
 def decode_storage(circuit: Circuit, data: bytes) -> Signed:
     """Read one reachable H2N1 graph without materializing its values."""
     if not isinstance(data, bytes) or not data.startswith(b"H2N1"):
         raise ValueError("invalid signed circuit encoding")
+    if _accelerator.native is not None and len(data) >= 256:
+        row = _accelerator.native.decode_dense(data)
+        if row is not None:
+            return circuit._from_dense_row(row)
     offset = 4
     size = len(data)
     max_bits = (2 * size).bit_length()

@@ -1,53 +1,11 @@
 """Exact signed convolution using shared high parts of recursive exponents."""
 
 from .symbolic import Circuit, Signed, _naf
-
-try:
-    from numpy import convolve, int64, zeros
-except ImportError:
-    convolve = None
-
+from ._dense_multiply import accumulate_dense, dense_groups
 
 _OFFSET_BITS = 64
 _SAFE_OFFSET = 1 << (_OFFSET_BITS - 2)
 _MAX_MASK_COORDINATES = 2048
-_MAX_DENSE_SPAN = 32768
-_MAX_DENSE_WORK = 8_000_000
-
-
-def _dense_small(circuit, a, b):
-    """Convolve bounded coefficient arrays, independent of the base exponent."""
-    if convolve is None or len(a.terms) * len(b.terms) < 2048:
-        return None
-    start_a, start_b = a.terms[0][0]._small, b.terms[0][0]._small
-    span_a = a.terms[-1][0]._small - start_a + 1
-    span_b = b.terms[-1][0]._small - start_b + 1
-    if (span_a + span_b > _MAX_DENSE_SPAN or span_a * span_b > _MAX_DENSE_WORK
-            or span_a > 6 * len(a.terms) or span_b > 6 * len(b.terms)):
-        return None
-    left, right = zeros(span_a, dtype=int64), zeros(span_b, dtype=int64)
-    for exponent, sign in a.terms:
-        left[exponent._small - start_a] = sign
-    for exponent, sign in b.terms:
-        right[exponent._small - start_b] = sign
-    # Each exact integer coefficient has magnitude at most the shorter span.
-    coefficients = convolve(left, right).tolist()
-    coefficients.append(0)
-    base = start_a + start_b
-    terms = []
-    i = 0
-    while i < len(coefficients) - 1:
-        coefficient = coefficients[i]
-        if coefficient:
-            digit = 0
-            if coefficient % 2:
-                digit = 2 - (coefficient + 2 * coefficients[i + 1]) % 4
-                terms.append((base + i, digit))
-            coefficients[i + 1] += (coefficient - digit) // 2
-            if i + 2 == len(coefficients) and coefficients[-1]:
-                coefficients.append(0)
-        i += 1
-    return circuit._from_small_positions(terms)
 
 
 def _exponent_groups(circuit, value):
@@ -130,11 +88,11 @@ def multiply_fast(circuit: Circuit, a: Signed, b: Signed) -> Signed:
     circuit._check(a, b)
     if not a.terms or not b.terms:
         return circuit.zero
-    if all(exponent._small is not None for value in (a, b) for exponent, _ in value.terms):
-        dense = _dense_small(circuit, a, b)
-        return circuit.multiply(a, b) if dense is None else dense
+    if a.terms[-1][0]._small is not None and b.terms[-1][0]._small is not None:
+        return circuit.multiply(a, b)
     left = _exponent_groups(circuit, a)
     right = _exponent_groups(circuit, b)
+    left_rows, right_rows = dense_groups(left), dense_groups(right)
     coordinates = _high_coordinates(circuit, left.keys() | right.keys())
     high_sums = {}
     blocks = {}
@@ -142,6 +100,9 @@ def multiply_fast(circuit: Circuit, a: Signed, b: Signed) -> Signed:
         for high_right, right_offsets in right.items():
             high = _sum_high(circuit, high_left, high_right, coordinates, high_sums)
             coefficients = blocks.setdefault(high, {})
+            if (high_left in left_rows and high_right in right_rows
+                    and accumulate_dense(left_rows[high_left], right_rows[high_right], coefficients)):
+                continue
             for x, sx in left_offsets:
                 for y, sy in right_offsets:
                     offset = x + y

@@ -2,7 +2,8 @@
 
 from functools import cache
 
-from .symbolic import _totient, _varint
+from . import _accelerator
+from .symbolic import _row_residue, _totient, _varint
 
 
 _OPCODES = {
@@ -131,6 +132,23 @@ def _geometric_mod(ratio: int, count: int, modulus: int) -> int:
 
 def _clip(value: int, cap: int) -> int:
     return max(-cap, min(value, cap))
+
+
+def _dense_naf(children, signs):
+    """Build signed coefficients only when all exponents are ordinary and nearby."""
+    highest = children[-1]._small
+    if highest is None or not 0 <= highest < min(_accelerator.MAX_DENSE_SPAN, 16 * len(children)):
+        return None
+    digits = bytearray(highest + 1)
+    mask = signs.to_bytes((len(children) + 7) // 8, "little")
+    previous = -1
+    for i, child in enumerate(children):
+        position = child._small
+        if position is None or not previous < position <= highest:
+            return None
+        digits[position] = 255 if mask[i // 8] >> (i % 8) & 1 else 1
+        previous = position
+    return bytes(digits)
 
 
 def _capped_power(base: int, exponent: int, cap: int) -> int:
@@ -293,6 +311,10 @@ def residue(expr, modulus: int, *, periods=None) -> int:
     def evaluate_node(node, m):
         kind, children, payload = node.kind, node.children, node.payload
         if kind == "naf":
+            if _accelerator.native is not None and len(children) >= 128:
+                row = _dense_naf(children, payload)
+                if row is not None:
+                    return _row_residue(row, m)
             return sum(
                 (-1 if payload >> i & 1 else 1) * power_mod(child, m)
                 for i, child in enumerate(children)

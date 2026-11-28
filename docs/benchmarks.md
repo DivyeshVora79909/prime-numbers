@@ -11,6 +11,108 @@ python -m symbolic_primes.quotient_benchmark
 
 Each benchmark checks its results and emits JSON. Products and quotients stay in symbolic representations throughout the runs. The archived runs used Python 3.12.14 on x86-64 with NumPy 2.3.5 and SymPy 1.14.0. Timings are wall-clock measurements. Storage figures count serialized bytes in a single reachable DAG. Fixture construction and verification run outside the operation timings. [Initial arithmetic](../benchmarks/results/benchmark-results.json) · [Deep arithmetic and prime products](../benchmarks/results/deep-benchmark-results.json) · [Exact quotient recovery](../benchmarks/results/quotient-benchmark-results.json)
 
+## Updating a saved 30,000-prime product
+
+The test starts with one H2N1 file representing the product of 30,000
+distinct random 40-digit primes. Each call receives only the file and
+one prime. The reference implementation is the archived Python driver
+with its compiled C++ multiplier. The current Python API calls Rust in
+the same process. [Checkpoint generator and input hashes](prime-access-storage-growth.md#measurement-and-verification)
+
+| Operation, starting from saved bytes in memory | Previous Python/C++ driver | Python API with Rust | Speedup |
+| --- | ---: | ---: | ---: |
+| Check whether the last prime divides the product | 3.508 s | 0.102 s | 34.5× |
+| Remove that prime and return an optimized H2N1 file | 11.703 s | 0.278 s | 42.0× |
+| Multiply the saved quotient by the prime and return an optimized H2N1 file | 11.748 s | 0.254 s | 46.3× |
+
+These are three-run wall-clock medians on an Intel Core i5-12450H,
+x86-64 Linux, Python 3.12.8 and a release build with Rust 1.83.0. Each
+pair ran in separate fresh processes pinned to the same logical CPU,
+alternating which implementation ran first.
+Both columns include reading the exponent definitions from bytes on every
+call. The update columns also include arithmetic, optimization and
+serialization. Disk reads, prime generation and the final hash comparisons
+are outside the timers. The historical driver used the Python package at
+commit `da3ca37`. Its timings include the original carry DP, subprocess
+calls and internal normalization checks where applicable. These timings measure
+the complete workflows. [Historical driver and C++ source](prime-product-reachability-demo.md)
+
+The member remainder was zero. The outsider remainder was
+`833120395990529729763735569905656999601` (0.102 s median). Removing
+the member gave a 15,681,645-byte quotient and a nonzero member remainder.
+Restoring it reproduced all **15,686,193 bytes** of the original file.
+As an independent construction check, the test converted the 30,000
+individual IDs to signed rows and combined pairs with the Rust multiplier.
+All 29,999 multiplications ran to completion. The final row matched all
+3,953,815 positions of the archived canonical row, and encoding it
+reproduced the same file byte for byte. Each intermediate held the
+combined signed digits of its product.
+The lower bound was **15,686,102 bytes**, leaving at most 91 bytes of
+possible improvement in H2N1. For comparison, packed binary needs
+494,227 bytes for this value. [Storage measurements and certificate](prime-access-storage-growth.md)
+
+To repeat the checks, build the native extension and use `wire` from the
+checkpoint generator linked above.
+
+```python
+from hashlib import sha256
+from statistics import median
+from timeit import repeat
+from symbolic_primes import Circuit, divide_storage, multiply_storage, residue
+
+c = Circuit()
+member = 3589358312608496142804550037657486194871
+outsider = 1540147111665682694523005535063805113443
+factor = c.integer(member)
+query = lambda: residue(c, wire, member)
+remove = lambda: divide_storage(c, wire, member, max_terms=4_000_000)
+quotient = remove().data
+restore = lambda: multiply_storage(c, quotient, factor)
+
+assert query() == 0
+assert residue(c, wire, outsider) == 833120395990529729763735569905656999601
+assert residue(c, quotient, member) != 0
+assert sha256(quotient).hexdigest() == '1b0106e9a999efdc8be37cb5c00e170c4080e0c97a6a22d0978423a59bae00b5'
+result = restore()
+assert result.data == wire and result.max_extra_bytes == 91
+for name, operation in [('member', query), ('remove', remove), ('restore', restore)]:
+    print(name, median(repeat(operation, number=1, repeat=3)))
+```
+
+For the previous column, use the archived `access.py` and compiled
+`merge` from the historical driver with that checkout. With the signed
+prime row prepared before timing, the corresponding calls were
+`access.mod_wire(access.split(wire), member)`,
+`access.optimize(access.divide(access.dense(access.split(wire)), member))`,
+and `access.optimize(access.merge([access.dense(access.split(quotient)), prime_row]))`.
+
+### Where the time went
+
+The following measurements isolate operations that have different costs
+from a full saved-file update.
+
+| Input and operation | Before | With Rust | What was timed |
+| --- | ---: | ---: | --- |
+| 12,290-prime signed row × next 40-digit prime | 73.1 ms | 10.6 ms | In-process C++ and Rust multiplication, including returning the signed row |
+| Two 810,000-position signed rows | 737.7 ms | 95.6 ms | Same kernel comparison, with byte-identical output |
+| Weighted carry DP on 1,619,742 positions | 1.547 s | 0.244 s | Recovering 539,627 signed terms, including Python tuples |
+| Default storage search on a 2,048-bit ordinary integer | 120 ms | 54 ms | Whole optimizer, identical bytes, bound and 445 search states |
+| Default storage search on a 4,096-bit ordinary integer | 234 ms | 130 ms | Whole optimizer, identical bytes, bound and 555 search states |
+
+The multiplication rows use seven-call medians. The larger pair takes
+the first and last 810,000 positions of the 12,290-prime row. The DP
+uses `Random(103).randbytes(span)` with each byte reduced modulo two
+and position cost `4 + NAF_weight(position)`. The storage runs use
+`Random(103).getrandbits(width) | (1 << (width - 1)) | 1` and three-call
+medians. Deep sparse inputs keep the recursive algorithms. A modular
+query on the saved dense product still reads the encoded graph, and an
+unlimited minimum-size proof can still require combinatorial search.
+
+For dense addition on fresh 100,000-position circuits, the five-run median
+fell from 342 ms to 259 ms and subtraction fell from 338 ms to 268 ms.
+These timings include constructing the Python result graph. The native
+addition loop alone took 1.46 ms on the same input width.
+
 ## Recursive multiplication
 
 The deep suite uses 36 seeded signed input pairs at depths 3, 5, and 8. It varies width and draws exponents from independent branches or a shared template pool. It checks input and product residues using a separate oracle that finds powers-of-two residue cycles. Both signed multiplication kernels produce byte-identical canonical results.

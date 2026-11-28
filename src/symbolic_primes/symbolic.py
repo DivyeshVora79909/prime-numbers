@@ -5,6 +5,9 @@ from functools import cache
 from heapq import heapify, heappop, heappush
 from weakref import WeakValueDictionary
 
+from . import _accelerator
+from ._dense_multiply import combine_if_dense, multiply_if_dense
+
 
 @dataclass(frozen=True, eq=False, slots=True, weakref_slot=True, repr=False)
 class Signed:
@@ -135,6 +138,8 @@ class Circuit:
         self._nodes = WeakValueDictionary()
         self.zero = self._intern(())
         self.one = self._intern(((self.zero, 1),))
+        # Prime IDs and ordinary exponent definitions repeatedly use these positions.
+        self._positions = {0: self.zero, 1: self.one}
 
     def _check(self, *values: Signed) -> None:
         for value in values:
@@ -156,6 +161,11 @@ class Circuit:
         """Import an ordinary input integer, typically a small ID or position."""
         if not isinstance(n, int):
             raise TypeError("expected an int")
+        position = n if 0 <= n < 256 else None
+        if position is not None:
+            cached = self._positions.get(position)
+            if cached is not None:
+                return cached
         terms = []
         exponent = 0
         while n:
@@ -165,7 +175,10 @@ class Circuit:
             digit = 2 - (n % 4)
             terms.append((self.integer(exponent), digit))
             n -= digit
-        return self._intern(tuple(terms))
+        value = self._intern(tuple(terms))
+        if position is not None:
+            self._positions[position] = value
+        return value
 
     def power(self, exponent: Signed) -> Signed:
         self._check(exponent)
@@ -178,7 +191,26 @@ class Circuit:
         return _compare(a, b)
 
     def _from_small_positions(self, terms) -> Signed:
-        return self._intern(tuple((self.integer(exponent), digit) for exponent, digit in terms))
+        # A million distinct ordinary exponents share only a few dozen inner
+        # positions. Reuse their signed edge tuples as well as their nodes.
+        edges = {}
+
+        def position(e):
+            definition = []
+            for i, sign in _accelerator.ordinary_terms(e):
+                key = (i, sign)
+                edge = edges.get(key)
+                if edge is None:
+                    edge = edges[key] = (self.integer(i), sign)
+                definition.append(edge)
+            return self._intern(tuple(definition))
+
+        return self._intern(tuple((position(e), digit) for e, digit in terms))
+
+    def _from_dense_row(self, row):
+        return self._from_small_positions(
+            (i, 1 if d == 1 else -1) for i, d in enumerate(row) if d
+        )
 
     def _from_coefficients(self, coefficients, small: bool) -> Signed:
         if small:
@@ -186,7 +218,15 @@ class Circuit:
         return self._intern(tuple(_naf(coefficients, lambda e: self.add(e, self.one))))
 
     def _combine(self, a: Signed, b: Signed, sign: int) -> Signed:
+        if not b.terms:
+            return a
+        if not a.terms:
+            return b if sign == 1 else self._intern(tuple((e, -d) for e, d in b.terms))
         small = all(e._small is not None for marking in (a, b) for e, _ in marking.terms)
+        if small:
+            result = combine_if_dense(self, a, b, sign)
+            if result is not None:
+                return result
         coefficients = {}
         for marking, multiplier in ((a, 1), (b, sign)):
             for exponent, digit in marking.terms:
@@ -250,6 +290,9 @@ class Circuit:
         small = all(e._small is not None for marking in (a, b) for e, _ in marking.terms)
         coefficients = {}
         if small:
+            product = multiply_if_dense(self, a, b)
+            if product is not None:
+                return product
             left = tuple((e._small, d) for e, d in a.terms)
             right = tuple((e._small, d) for e, d in b.terms)
             for x, sx in left:
@@ -288,6 +331,11 @@ class Circuit:
 
     def encode(self, value: Signed) -> bytes:
         """Encode a pure DAG as bottom-up varint rows. The last row is the root."""
+        self._check(value)
+        if _accelerator.native is not None and len(value.terms) >= 64:
+            row = _accelerator.dense_row(value)
+            if row is not None:
+                return _accelerator.native.encode_dense(row)
         return _encode_rows(self._encoding(value))
 
     def stats(self, value: Signed) -> dict:
@@ -391,8 +439,13 @@ def _totient(n: int) -> int:
     return phi
 
 
+def _row_residue(row: bytes, modulus: int) -> int:
+    divisor = modulus.to_bytes((modulus.bit_length() + 7) // 8, "little")
+    return int.from_bytes(_accelerator.native.dense_residue(row, divisor), "little")
+
+
 def residue(circuit: Circuit, value, modulus: int, *, periods=None) -> int:
-    """Evaluate modulo a positive modulus with no large integer expansion.
+    """Evaluate a marking, expression or H2N1 encoding modulo a positive integer.
 
     For a non-small exponent, automatic period discovery is limited to
     odd moduli below 2**32. Supply a valid period of 2 for larger odd parts
@@ -400,6 +453,15 @@ def residue(circuit: Circuit, value, modulus: int, *, periods=None) -> int:
     """
     if not isinstance(modulus, int) or modulus <= 0:
         raise ValueError("modulus must be a positive int")
+    if isinstance(value, bytes):
+        if _accelerator.native is not None:
+            row = _accelerator.native.decode_dense(value)
+            if row is not None:
+                return _row_residue(row, modulus)
+        from ._storage_decode import decode_storage
+
+        value = decode_storage(circuit, value)
+
     periods = {} if periods is None else periods
 
     @cache
@@ -436,6 +498,10 @@ def residue(circuit: Circuit, value, modulus: int, *, periods=None) -> int:
             return 0
         if node._small is not None:
             return node._small % m
+        if _accelerator.native is not None:
+            row = _accelerator.dense_row(node, min_terms=32)
+            if row is not None:
+                return _row_residue(row, m)
         return sum(digit * power_mod(exponent, m) for exponent, digit in node.terms) % m
 
     if isinstance(value, Geometric):

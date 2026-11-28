@@ -3,7 +3,27 @@
 from collections import Counter
 from math import inf
 
+from ._accelerator import native
 from ._storage_bound import _root_digits
+
+
+def _prefix_layout(root, rows, low_nodes, counts):
+    """Index just the nodes reachable before DFS issues its 64th wire ID."""
+    nodes = list(dict.fromkeys((root, *low_nodes)))
+    indices = {node: i for i, node in enumerate(nodes)}
+    adjacency = []
+    for node in nodes:
+        children = []
+        # Distinct root children each receive an ID, so later children cannot
+        # affect the first 64 even when a low coordinate definition changes.
+        row = rows[root][:64] if node is root else rows[node]
+        for child, _ in row:
+            if child not in indices:
+                indices[child] = len(nodes)
+                nodes.append(child)
+            children.append(indices[child])
+        adjacency.append(children)
+    return native.PrefixLayout(adjacency, [counts[node] for node in nodes]), indices
 
 
 def _first_nodes(root, rows, changed=None, replacement=()):
@@ -66,6 +86,8 @@ def early_reference_change(root, rows, step):
     late = [e for e, node in sorted(available.items()) if node not in first and counts[node] > 1]
     if not late:
         return None
+    if native is not None:
+        layout, indices = _prefix_layout(root, rows, available.values(), counts)
     original_credit = sum(counts[node] for node in first)
     best_delta = 0
     change = None
@@ -85,9 +107,12 @@ def early_reference_change(root, rows, step):
                     continue
                 # Keeping another reference to every removed child preserves
                 # reachability. All new children are numerically below parent.
-                after = _first_nodes(root, rows, parent, row)
-                credit = sum(counts[node] for node in after)
-                credit += len((refs - old_refs) & after) - len(removed & after)
+                if native is None:
+                    after = _first_nodes(root, rows, parent, row)
+                    credit = sum(counts[node] for node in after)
+                    credit += len((refs - old_refs) & after) - len(removed & after)
+                else:
+                    credit = layout.credit(indices[parent], [indices[child] for child, _ in row])
                 # Both rows store an ordinary exponent with <=64 available
                 # positions, so their arities still take exactly one byte.
                 delta = 2 * (len(row) - len(old)) + original_credit - credit

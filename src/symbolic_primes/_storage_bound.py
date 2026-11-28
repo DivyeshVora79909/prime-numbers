@@ -1,6 +1,11 @@
 """A whole-graph byte lower bound for wide roots at ordinary bit positions."""
 
 from math import inf
+from struct import Struct
+
+from ._accelerator import native
+
+_DIGIT = Struct("<Qb")
 
 
 def _ordinary_highest(value):
@@ -28,6 +33,8 @@ def _binary_columns(value, horizon):
 
 
 def _naf_weights(limit):
+    if native is not None and limit >= 64:
+        return list(native.naf_weights(limit))
     weights = [0, 1]
     for x in range(2, limit + 1):
         half = x // 2
@@ -69,6 +76,14 @@ def _root_cost(bits, costs, *, force=-1, prefer_negative=None):
 
 def _root_digits(bits, costs):
     """Recover one minimum-cost row, preferring a positive digit on ties."""
+    if native is not None and len(bits) >= 64 and len(bits) == len(costs):
+        try:
+            byte_costs = bytes(costs)
+        except (TypeError, ValueError, OverflowError):
+            # Infinity prohibits a digit; exact Python costs can also exceed a byte.
+            pass
+        else:
+            return tuple(_DIGIT.iter_unpack(native.weighted_root_digits(bytes(bits), byte_costs)))
     prefer_negative = bytearray(len(bits))
     if _root_cost(bits, costs, prefer_negative=prefer_negative) == inf:
         return None
@@ -171,6 +186,32 @@ def _late_reference(bits, cutoff, ordinary, costs, cheapest, step):
     return all_prefixes_late(0, lower_positions, 0)
 
 
+def _subset_costs(bits, ordinary, low_count, restricted_count, present, possible,
+                  row_header, ceiling):
+    """Optimistic and fully present completion costs, excluding the fixed header."""
+    if native is not None:
+        return native.storage_subset_costs(bits, ordinary, low_count, restricted_count,
+                                           present, possible, row_header, ceiling)
+    weights = _restricted_weights(len(bits) - 1, restricted_count - 1, possible, ordinary)
+    base = sum(row_header + weights[t] for t in range(low_count) if present & (1 << t))
+    if base >= ceiling:
+        return ceiling, ceiling
+    costs = [1 + row_header + w for w in weights]
+    for t in range(low_count):
+        if present & (1 << t):
+            costs[t] = 1
+        elif not possible & (1 << t):
+            costs[t] = inf
+    optimistic = base + _root_cost(bits, costs)
+    if optimistic >= ceiling or present == possible:
+        return optimistic, optimistic
+    for t in range(low_count):
+        if possible & (1 << t) and not present & (1 << t):
+            base += row_header + weights[t]
+            costs[t] = 1
+    return optimistic, base + _root_cost(bits, costs)
+
+
 def ordinary_storage_bound(value, ceiling, step):
     """Bound H2N1 bytes from below, given a valid incumbent of size ceiling.
 
@@ -187,8 +228,8 @@ def ordinary_storage_bound(value, ceiling, step):
     # subsequent relaxed digit has positive cost. This bounds the relaxed
     # minimum and its ties, even if the actual optimum uses higher exponents.
     limit = highest + 1
-    bits = _binary_columns(value, limit)
-    ordinary = _naf_weights(limit)
+    bits = bytes(_binary_columns(value, limit))
+    ordinary = bytes(_naf_weights(limit))
     cutoff = highest.bit_length() - 1
     full = (1 << (cutoff + 1)) - 1
     minimum_terms = len(value.terms)
@@ -217,32 +258,13 @@ def ordinary_storage_bound(value, ceiling, step):
             step()
             # Higher bits remain available, so the ordinary suffix table
             # already solves all positions above the latest exclusion.
-            weights = _restricted_weights(limit, next_bit - 1, possible, ordinary)
-            base = header + sum(
-                row_header + weights[t] for t in range(cutoff + 1) if present & (1 << t)
-            )
-            if base >= other:
-                continue
-            weights_for_root = [1 + row_header + w for w in weights]
-            for t in range(cutoff + 1):
-                if present & (1 << t):
-                    weights_for_root[t] = 1
-                elif not possible & (1 << t):
-                    weights_for_root[t] = inf
             # Undecided low nodes may serve every child row for free. If
             # the root selects one, its definition must be paid for once.
-            optimistic = base + _root_cost(bits, weights_for_root)
-            if optimistic >= other:
-                continue
-            if present == possible:
-                other = optimistic
-                continue
-            for t in range(cutoff + 1):
-                if possible & (1 << t) and not present & (1 << t):
-                    base += row_header + weights[t]
-                    weights_for_root[t] = 1
-            other = min(other, base + _root_cost(bits, weights_for_root))
-            if optimistic < other:
+            optimistic, completion = _subset_costs(
+                bits, ordinary, cutoff + 1, next_bit, present, possible, row_header, other - header
+            )
+            other = min(other, header + completion)
+            if header + optimistic < other:
                 visit_subsets(present, possible, next_bit)
 
     # Every reachable nonempty DAG contains the zero node.

@@ -14,13 +14,40 @@ class AdaptiveTests(unittest.TestCase):
         self.c = Circuit()
         self.a = Adaptive(self.c)
 
+    def test_signed_addition_and_subtraction_at_translated_positions(self):
+        c = self.c
+        rng = Random(725)
+        x = rng.getrandbits(720)
+        y = -(rng.getrandbits(413) << 8)
+
+        def translate(value, offset):
+            return c._intern(tuple((c.integer(e._small + offset), d)
+                                   for e, d in c.integer(value).terms))
+
+        for offset in (0, 1 << 48):
+            a, b = translate(x, offset), translate(y, offset)
+            self.assertIs(c.add(a, b), translate(x + y, offset))
+            self.assertIs(c.subtract(b, a), translate(y - x, offset))
+            self.assertIs(c.add(a, translate(-x, offset)), c.zero)
+            self.assertIs(c.subtract(c.zero, a), translate(-x, offset))
+            self.assertIs(c.subtract(c.add(a, b), a), b)
+
+        # A distant ordinary digit and an unbounded tower take the sparse path.
+        for exponent in (c.integer(1 << 48), c.power(c.power(c.integer(80)))):
+            far = c.power(exponent)
+            dense = c.integer(x)
+            self.assertIs(c.subtract(c.add(dense, far), far), dense)
+
     def test_dense_and_recursive_multiplication(self):
         c = self.c
         rng = Random(1937)
         for _ in range(16):
-            a = c.integer(rng.randrange(-(1 << 350), 1 << 350))
-            b = c.integer(rng.randrange(-(1 << 210), 1 << 210))
-            self.assertIs(multiply_fast(c, a, b), c.multiply(a, b))
+            x = rng.randrange(-(1 << 350), 1 << 350)
+            y = rng.randrange(-(1 << 210), 1 << 210)
+            a, b = c.integer(x), c.integer(y)
+            expected = c.integer(x * y)
+            self.assertIs(c.multiply(a, b), expected)
+            self.assertIs(multiply_fast(c, a, b), expected)
         exponent = c.power(c.power(c.integer(80)))
         second = c.power(c.add(exponent, c.integer(15)))
         left = c.zero
@@ -28,6 +55,22 @@ class AdaptiveTests(unittest.TestCase):
         for offset in (5, 16, 43, 700):
             left = c.add(left, c.power(c.add(exponent, c.integer(offset))))
             right = c.subtract(right, c.power(c.add(second, c.integer(offset))))
+        self.assertIs(multiply_fast(c, left, right), c.multiply(left, right))
+
+    def test_dense_offset_products_at_tower_exponents(self):
+        c = self.c
+        high = c.power(c.power(c.integer(80)))
+        twice_high = c.add(high, high)
+
+        def translated(base, sign):
+            return c._intern(tuple(
+                (c.add(base, c.integer(offset)), sign if offset % 5 else -sign)
+                for offset in range(-40, 58, 3)
+            ))
+
+        # Two cross-products land in the same high group; their carries interact.
+        left = c.add(translated(high, 1), translated(twice_high, -1))
+        right = c.add(translated(high, -1), translated(twice_high, 1))
         self.assertIs(multiply_fast(c, left, right), c.multiply(left, right))
 
     def test_repeated_block_in_an_exponent(self):

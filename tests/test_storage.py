@@ -1,7 +1,81 @@
 import unittest
 from random import Random
+from unittest.mock import patch
 
-from symbolic_primes import Circuit, decode_storage, multiply_fast, multiply_storage, optimize_storage
+from symbolic_primes import (
+    Circuit, QuotientWorkLimit, decode_storage, divide_storage, multiply_fast,
+    multiply_storage, optimize_storage, residue,
+)
+from symbolic_primes import _accelerator, _storage_bound
+
+
+class StoredArithmeticTests(unittest.TestCase):
+    def test_stored_division_matches_direct_construction_and_quotient_budget(self):
+        c = Circuit()
+        q = -(Random(155).getrandbits(300) | 1)
+        p = -(2**127 - 1)
+        wire = c.encode(c.integer(p * q))
+        budget = len(c.integer(q).terms)
+        expected = optimize_storage(c, c.integer(q), max_states=7)
+        for d in (p, c.integer(p), c.encode(c.integer(p))):
+            self.assertEqual(divide_storage(c, wire, d, max_terms=budget, max_states=7), expected)
+        self.assertEqual(residue(c, wire, abs(p)), 0)
+        self.assertEqual(residue(c, expected.data, abs(p)), q % abs(p))
+        with self.assertRaises(QuotientWorkLimit):
+            divide_storage(c, wire, p, max_terms=budget - 1)
+        with self.assertRaises(ValueError):
+            divide_storage(c, wire, 2 * p, max_terms=500)
+        with self.assertRaises(ValueError):
+            divide_storage(c, wire, 0)
+        with self.assertRaises(ValueError):
+            multiply_storage(c, wire, Circuit().zero)
+
+    def test_shifts_of_serialized_numbers(self):
+        c = Circuit()
+        q = Random(191).getrandbits(520) | 1
+        wire = c.encode(c.integer(q << 75))
+        budget = len(c.integer(q).terms)
+        result = divide_storage(c, wire, -(1 << 75), max_terms=budget, max_states=0)
+        self.assertEqual(result.data, c.encode(c.integer(-q)))
+        with self.assertRaises(QuotientWorkLimit):
+            divide_storage(c, wire, 1 << 75, max_terms=budget - 1)
+        with self.assertRaises(ValueError):
+            divide_storage(c, wire, 1 << 76, max_terms=0)
+        giant = c.power(c.power(c.integer(120)))
+        self.assertEqual(divide_storage(c, c.encode(c.zero), giant, max_terms=0).data,
+                         c.encode(c.zero))
+        with self.assertRaises(ValueError):
+            divide_storage(c, wire, giant)
+
+    def test_wide_storage_bytes_and_bounds_match_for_both_backends(self):
+        c = Circuit()
+        number = (1 << 25_999) | Random(20261128).getrandbits(25_999) | 1
+        for signed in (number, -number, number << 3, -(number << 40)):
+            with self.subTest(sign=signed > 0, shift=(signed & -signed).bit_length() - 1):
+                value = c.integer(signed)
+                self.assertGreaterEqual(len(value.terms), 8192)
+                reference = optimize_storage(c, value, max_states=1)
+                self.assertIs(decode_storage(c, reference.data), value)
+                self.assertEqual(residue(c, reference.data, 2**127 - 1), signed % (2**127 - 1))
+                self.assertLessEqual(reference.lower_bound_bytes, len(reference.data))
+                self.assertLessEqual(len(reference.data), len(c.encode(value)))
+                with patch.object(_accelerator, "native", None), patch.object(_storage_bound, "native", None):
+                    self.assertEqual(optimize_storage(c, value, max_states=1), reference)
+                    self.assertIs(decode_storage(c, reference.data), value)
+                self.assertEqual(optimize_storage(c, value, max_states=0).data, c.encode(value))
+
+    @unittest.skipUnless(_accelerator.native is not None, "Rust extension not installed")
+    def test_wide_update_restores_same_file_as_direct_optimization(self):
+        c = Circuit()
+        number = Random(9393).getrandbits(26_000) | 1
+        factor = -943433720027638044163815075978910058741
+        original = optimize_storage(c, c.integer(number), max_states=1)
+        product = multiply_storage(c, original.data, c.encode(c.integer(factor)), max_states=1)
+        self.assertEqual(product, optimize_storage(c, c.integer(number * factor), max_states=1))
+        restored = divide_storage(c, product.data, factor, max_terms=10_000, max_states=1)
+        self.assertEqual(restored, original)
+        canonical = multiply_storage(c, original.data, c.integer(factor), max_states=0)
+        self.assertEqual(canonical, optimize_storage(c, c.integer(number * factor), max_states=0))
 
 
 class StorageTests(unittest.TestCase):

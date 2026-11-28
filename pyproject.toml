@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=64"]
+requires = ["setuptools>=64", "setuptools-rust>=1.9"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -20,3 +20,10 @@ symbolic-primes-quotient-benchmark = "symbolic_primes.quotient_benchmark:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[[tool.setuptools-rust.ext-modules]]
+target = "symbolic_primes._native"
+path = "native/Cargo.toml"
+binding = "PyO3"
+optional = true
+debug = false

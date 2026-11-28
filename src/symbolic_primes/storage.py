@@ -4,16 +4,19 @@ from dataclasses import dataclass
 from itertools import islice
 from typing import Iterator
 
+from . import _accelerator
 from ._storage_bound import ordinary_storage_bound, weighted_root_row
 from ._storage_decode import decode_storage
 from ._storage_layout import early_reference_change
 from ._storage_rows import alternative_rows
 from ._storage_small import prove_small_storage
+from ._wide_storage import wide_candidate
+from .quotient_kernel import QuotientWorkLimit, _divide_dense, divide_fast
 from .similarity_kernel import multiply_fast
-from .symbolic import Circuit, Signed, _encode_graph_rows, _encode_rows
+from .symbolic import Circuit, Signed, _bounded_integer, _encode_graph_rows, _encode_rows
 
 
-__all__ = ("StorageResult", "decode_storage", "multiply_storage", "optimize_storage")
+__all__ = ("StorageResult", "decode_storage", "divide_storage", "multiply_storage", "optimize_storage")
 _Row = tuple[tuple[Signed, int], ...]
 _DEFAULT_STATES = 2_048
 
@@ -65,6 +68,16 @@ def _minimum_size(nodes: int, row_bytes: int) -> int:
     return 4 + _varint_size(nodes) + row_bytes + wide_references
 
 
+def _compulsory_bounds(arities):
+    row_bytes = sum(_row_minimum(n) for n in arities)
+    # A row's other children lie between that row and its lowest exponent.
+    # These intervals are disjoint along the chain, so those children each
+    # require a distinct nonzero row and at least one defining edge.
+    other_children = sum(n - 1 for n in arities if n)
+    lower = _minimum_size(len(arities) + other_children, row_bytes + 2 * other_children)
+    return row_bytes, lower
+
+
 def _encode_graph(root: Signed, rows: dict[Signed, _Row]) -> bytes:
     return _encode_rows(_encode_graph_rows(root, rows.__getitem__))
 
@@ -110,6 +123,30 @@ def _seed(circuit, root, rows, best, step):
                 rows[value] = current
 
 
+def _target(max_states, target_gap_percent):
+    if max_states is not None and (not isinstance(max_states, int) or max_states < 0):
+        raise ValueError("max_states must be a nonnegative integer or None")
+    if target_gap_percent is None:
+        return 0 if max_states is None else 1
+    if not isinstance(target_gap_percent, int) or target_gap_percent < 0:
+        raise ValueError("target_gap_percent must be a nonnegative integer or None")
+    return target_gap_percent
+
+
+def _wide_result(row, max_states):
+    candidate = wide_candidate(row) if max_states != 0 else None
+    if candidate is None:
+        return None
+    data, lower = candidate
+    return StorageResult(data, len(data) == lower, 1, lower)
+
+
+def _finished(result, max_states, target):
+    return result is not None and (
+        result.states == max_states or 100 * result.max_extra_bytes <= target * result.lower_bound_bytes
+    )
+
+
 def optimize_storage(
     circuit: Circuit, value: Signed, *, max_states: int | None = _DEFAULT_STATES,
     target_gap_percent: int | None = None,
@@ -123,25 +160,22 @@ def optimize_storage(
     to an exact proof. The returned bound also applies on budget exhaustion.
     """
     circuit._check(value)
-    if max_states is not None and (not isinstance(max_states, int) or max_states < 0):
-        raise ValueError("max_states must be a nonnegative integer or None")
-    if target_gap_percent is None:
-        target_gap_percent = 0 if max_states is None else 1
-    elif not isinstance(target_gap_percent, int) or target_gap_percent < 0:
-        raise ValueError("target_gap_percent must be a nonnegative integer or None")
+    target = _target(max_states, target_gap_percent)
+    seed = None
+    if max_states != 0 and len(value.terms) >= 8192:
+        seed = _wide_result(_accelerator.dense_row(value), max_states)
+        if _finished(seed, max_states, target):
+            return seed
+    return _search(circuit, value, max_states, target, seed)
 
-    seed_rows = _canonical_rows(value, value.terms)
-    best = _encode_graph(value, seed_rows)
-    states = 0
+
+def _search(circuit, value, max_states, target_gap_percent, seed):
+    best = seed.data if seed is not None else circuit.encode(value)
+    states = seed.states if seed is not None else 0
     initial_pending = _required_rows((value,), {}, set())
-    initial_bytes = sum(_row_minimum(len(node.terms)) for node in initial_pending)
-    # Along the compulsory chain, every other child of a positive row
-    # lies strictly between that row and its lowest exponent. Those
-    # intervals are disjoint, also for a signed root above its lowest digit.
-    # Each additional child needs a distinct nonzero row and at least one edge.
-    other_children = sum(len(node.terms) - 1 for node in initial_pending if node.terms)
-    lower_bound = _minimum_size(len(initial_pending) + other_children,
-                                initial_bytes + 2 * other_children)
+    initial_bytes, lower_bound = _compulsory_bounds([len(node.terms) for node in initial_pending])
+    if seed is not None:
+        lower_bound = max(lower_bound, seed.lower_bound_bytes)
 
     def result(*, proved=False):
         bound = len(best) if proved else lower_bound
@@ -170,6 +204,7 @@ def optimize_storage(
         step()
         seed_states += 1
 
+    seed_rows = _canonical_rows(value, value.terms)
     layouts = [seed_rows]
     best_rows = seed_rows
     try:
@@ -307,16 +342,80 @@ def optimize_storage(
     return result(proved=True)
 
 
+def _operand(circuit, value):
+    if isinstance(value, bytes):
+        return decode_storage(circuit, value)
+    circuit._check(value)
+    return value
+
+
+def _native_row(circuit, value):
+    if isinstance(value, bytes):
+        return _accelerator.native.decode_dense(value)
+    circuit._check(value)
+    return _accelerator.dense_row(value) if value.terms else b""
+
+
+def _store_row(circuit, row, max_states, target):
+    if max_states == 0 and row and len(row) <= _accelerator.MAX_DENSE_SPAN:
+        # Only the lowest-exponent chain is needed for the zero-state bound.
+        first = next(i for i, digit in enumerate(row) if digit)
+        chain = _required_rows((circuit.integer(first),), {}, set())
+        arities = [len(row) - row.count(0), *(len(node.terms) for node in chain)]
+        _, lower = _compulsory_bounds(arities)
+        data = _accelerator.native.encode_dense(row)
+        return StorageResult(data, len(data) == lower, 0, lower)
+    seed = _wide_result(row, max_states)
+    if _finished(seed, max_states, target):
+        return seed
+    return _search(circuit, circuit._from_dense_row(row), max_states, target, seed)
+
+
 def multiply_storage(
     circuit: Circuit, left: Signed | bytes, right: Signed | bytes,
     *, max_states: int | None = _DEFAULT_STATES, target_gap_percent: int | None = None,
 ) -> StorageResult:
     """Multiply signed graphs or their H2N1 bytes, then optimize the product."""
-    if isinstance(left, bytes):
-        left = decode_storage(circuit, left)
-    if isinstance(right, bytes):
-        right = decode_storage(circuit, right)
-    return optimize_storage(
-        circuit, multiply_fast(circuit, left, right),
-        max_states=max_states, target_gap_percent=target_gap_percent,
-    )
+    target = _target(max_states, target_gap_percent)
+    native = _accelerator.native
+    if native is not None and any(isinstance(v, bytes) and len(v) >= 256 for v in (left, right)):
+        a = _native_row(circuit, left)
+        b = _native_row(circuit, right)
+        if a is not None and b is not None and len(a) + len(b) - 1 <= native.MAX_MULTIPLY_SPAN:
+            return _store_row(circuit, native.multiply_rows(a, b), max_states, target)
+    value = multiply_fast(circuit, _operand(circuit, left), _operand(circuit, right))
+    return optimize_storage(circuit, value, max_states=max_states, target_gap_percent=target)
+
+
+def divide_storage(
+    circuit: Circuit, numerator: Signed | bytes, denominator: Signed | bytes | int,
+    *, max_terms: int = 256, max_states: int | None = _DEFAULT_STATES,
+    target_gap_percent: int | None = None,
+) -> StorageResult:
+    """Divide exactly, then optimize the quotient. Budgets match divide_fast and optimize_storage."""
+    target = _target(max_states, target_gap_percent)
+    if not isinstance(max_terms, int) or max_terms < 0:
+        raise ValueError("max_terms must be a nonnegative integer")
+    divisor = circuit.integer(denominator) if isinstance(denominator, int) else _operand(circuit, denominator)
+    if not divisor.terms:
+        raise ValueError("division by zero")
+    highest = divisor.terms[-1][0]._small
+    monomial = len(divisor.terms) == 1
+    if (_accelerator.native is not None and isinstance(numerator, bytes)
+            and (monomial or highest is not None and highest <= 511)):
+        row = _native_row(circuit, numerator)
+        if row is not None:
+            if monomial:
+                if row and (highest is None or highest >= len(row) or any(row[:highest])):
+                    raise ValueError("division is not exact")
+                quotient = row[highest:]
+                if len(quotient) - quotient.count(0) > max_terms:
+                    raise QuotientWorkLimit(f"quotient exceeded {max_terms} signed digits")
+            else:
+                quotient = _divide_dense(row, abs(_bounded_integer(divisor, 512)), max_terms)
+            if quotient is not None:
+                if divisor.terms[-1][1] < 0:
+                    quotient = quotient.translate(bytes.maketrans(b"\x01\xff", b"\xff\x01"))
+                return _store_row(circuit, quotient, max_states, target)
+    quotient = divide_fast(circuit, _operand(circuit, numerator), divisor, max_terms=max_terms)
+    return optimize_storage(circuit, quotient, max_states=max_states, target_gap_percent=target)

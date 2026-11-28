@@ -19,6 +19,9 @@ venv/
 build/
 dist/
 *.egg-info/
+native/target/
+src/symbolic_primes/_native*.so
+src/symbolic_primes/_native*.pyd
 
 # Editors and platforms
 .idea/
