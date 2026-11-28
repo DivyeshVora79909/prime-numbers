@@ -1,0 +1,143 @@
+[
+  {
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+    "worker_address_space_limit_mib": 96,
+    "actual_primes": {
+      "ids": 30000,
+      "bytes": 494227,
+      "sha256": "b4a6c3bb41f08ef79c63ab6cbc0dcaa65db2405c6ace6819859366ec80021c5b",
+      "bulk_build": {
+        "seconds": 74.701996,
+        "peak_rss_kib_including_launcher": 16804,
+        "observed_post_exec_hwm_kib": 7872,
+        "storage_read_bytes": 61440,
+        "storage_write_bytes": 499712
+      }
+    },
+    "synthetic": {
+      "fixture": "SHAKE-256 dense arithmetic cofactor; other factors uncertified",
+      "cofactor_bytes": 2147483648,
+      "cofactor_sha256": "3825c495053c1aa8288f6da6f38564c47b0242be934b5740a3692e54cea6d1b6",
+      "granted_sha256": "1f78835d98c60008ce3486b998c8016b523769c423a0d6076447c8ab5b257882",
+      "cases": {
+        "warm": {
+          "grant": {
+            "seconds": 3.512974,
+            "peak_rss_kib_including_launcher": 15864,
+            "observed_post_exec_hwm_kib": 6532,
+            "storage_read_bytes": 0,
+            "storage_write_bytes": 2147491840
+          },
+          "member": {
+            "seconds": 1.959663,
+            "peak_rss_kib_including_launcher": 15864,
+            "observed_post_exec_hwm_kib": 6576,
+            "storage_read_bytes": 0,
+            "storage_write_bytes": 4096
+          },
+          "revoke": {
+            "seconds": 4.720614,
+            "peak_rss_kib_including_launcher": 15864,
+            "observed_post_exec_hwm_kib": 6604,
+            "storage_read_bytes": 0,
+            "storage_write_bytes": 2147487744
+          }
+        },
+        "eviction_requested": {
+          "grant": {
+            "seconds": 6.542336,
+            "peak_rss_kib_including_launcher": 15864,
+            "observed_post_exec_hwm_kib": 6564,
+            "storage_read_bytes": 2147483648,
+            "storage_write_bytes": 2147491840
+          },
+          "member": {
+            "seconds": 5.00562,
+            "peak_rss_kib_including_launcher": 15864,
+            "observed_post_exec_hwm_kib": 6624,
+            "storage_read_bytes": 2147487744,
+            "storage_write_bytes": 4096
+          },
+          "revoke": {
+            "seconds": 7.959792,
+            "peak_rss_kib_including_launcher": 15864,
+            "observed_post_exec_hwm_kib": 6616,
+            "storage_read_bytes": 2147508224,
+            "storage_write_bytes": 2147487744
+          }
+        }
+      }
+    }
+  },
+  {
+    "platform": "Linux-7.0.0-42-generic-x86_64-with-glibc2.39",
+    "worker_address_space_limit_mib": 96,
+    "executable_sha256": "a95032f0b1f90c02f8e8a29c4f8c470a7594863ce6ccc6ffc879570874a81b8b",
+    "actual_primes": {
+      "ids": 30000,
+      "bytes": 494227,
+      "sha256": "b4a6c3bb41f08ef79c63ab6cbc0dcaa65db2405c6ace6819859366ec80021c5b",
+      "bulk_build": {
+        "seconds": 132.444985,
+        "peak_rss_kib_including_launcher": 16864,
+        "observed_post_exec_hwm_kib": 11900,
+        "storage_read_bytes": 0,
+        "storage_write_bytes": 499712
+      }
+    },
+    "synthetic": {
+      "fixture": "SHAKE-256 dense arithmetic cofactor; other factors uncertified",
+      "cofactor_bytes": 2147483648,
+      "cofactor_sha256": "3825c495053c1aa8288f6da6f38564c47b0242be934b5740a3692e54cea6d1b6",
+      "granted_sha256": "1f78835d98c60008ce3486b998c8016b523769c423a0d6076447c8ab5b257882",
+      "cases": {
+        "warm": {
+          "grant": {
+            "seconds": 6.038343,
+            "peak_rss_kib_including_launcher": 16660,
+            "observed_post_exec_hwm_kib": 6592,
+            "storage_read_bytes": 0,
+            "storage_write_bytes": 2147491840
+          },
+          "member": {
+            "seconds": 3.741178,
+            "peak_rss_kib_including_launcher": 16572,
+            "observed_post_exec_hwm_kib": 6628,
+            "storage_read_bytes": 0,
+            "storage_write_bytes": 4096
+          },
+          "revoke": {
+            "seconds": 8.411501,
+            "peak_rss_kib_including_launcher": 16572,
+            "observed_post_exec_hwm_kib": 6628,
+            "storage_read_bytes": 20480,
+            "storage_write_bytes": 2147487744
+          }
+        },
+        "eviction_requested": {
+          "grant": {
+            "seconds": 12.819123,
+            "peak_rss_kib_including_launcher": 16660,
+            "observed_post_exec_hwm_kib": 6548,
+            "storage_read_bytes": 2147483648,
+            "storage_write_bytes": 2147491840
+          },
+          "member": {
+            "seconds": 9.282944,
+            "peak_rss_kib_including_launcher": 16660,
+            "observed_post_exec_hwm_kib": 6540,
+            "storage_read_bytes": 2147487744,
+            "storage_write_bytes": 4096
+          },
+          "revoke": {
+            "seconds": 15.937048,
+            "peak_rss_kib_including_launcher": 16696,
+            "observed_post_exec_hwm_kib": 6644,
+            "storage_read_bytes": 2147512320,
+            "storage_write_bytes": 2147487744
+          }
+        }
+      }
+    }
+  }
+]

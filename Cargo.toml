@@ -1,0 +1,20 @@
+[package]
+name = "prime-label"
+version = "0.2.0"
+edition = "2024"
+rust-version = "1.89"
+description = "Exact file-backed access sets using packed prime products"
+publish = false
+
+[dependencies]
+bytemuck = "1"
+clap = { version = "4.5", features = ["derive"] }
+getrandom = "0.3"
+libc = "0.2"
+gmp-mpfr-sys = { version = "~1.6", default-features = false, features = ["use-system-libs"] }
+rug = { version = "~1.27", default-features = false, features = ["integer", "std"] }
+tempfile = "3"
+
+[build-dependencies]
+cc = "1"
+pkg-config = "0.3"

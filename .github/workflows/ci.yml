@@ -1,47 +1,23 @@
 name: CI
-
-on:
-  pull_request:
-  push:
-    branches: [main]
-
+on: [push, pull_request]
 permissions:
   contents: read
-
 jobs:
-  tests:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.11", "3.12", "3.13"]
-        backend: [rust]
-        include:
-          - python-version: "3.12"
-            backend: portable
+  verify:
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
-      - uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Build sdist and wheel
+      - name: Install arithmetic libraries
         run: |
-          if [[ "${{ matrix.backend }}" == "portable" ]]; then
-            mkdir "$RUNNER_TEMP/no-rust"
-            ln -s /bin/false "$RUNNER_TEMP/no-rust/rustc"
-            export PATH="$RUNNER_TEMP/no-rust:$PATH"
-          fi
-          python -m pip install build
-          python -m build
-      - name: Install wheel and verify backend
+          sudo apt-get update
+          sudo apt-get install -y libflint-dev libgmp-dev pkg-config
+      - run: cargo fmt --all -- --check
+      - run: cargo clippy --locked --all-targets -- -D warnings
+      - run: cargo test --locked
+      - run: cargo build --locked --release
+      - run: python3 tools/verify_scale.py --size-mib 1
+      - name: Check archive integrity
         run: |
-          wheels=(dist/*.whl)
-          python -m pip install "${wheels[0]}[benchmark]"
-          python -c "from symbolic_primes._accelerator import native; assert (native is not None) == ('${{ matrix.backend }}' == 'rust')"
-      - name: Test Rust kernels
-        if: matrix.backend == 'rust' && matrix.python-version == '3.12'
-        run: cargo test --locked --manifest-path native/Cargo.toml
-      - name: Run verification suites
-        run: python -m unittest discover -s tests -v
-      - name: Run symbolic benchmark smoke test
-        run: python -m symbolic_primes.benchmark --skip-primes --repeats 3 --growth-levels 4
+          snapshot=$(mktemp -d)
+          tar -xJf archive/before-packed-binary.tar.xz -C "$snapshot"
+          (cd "$snapshot" && sha256sum --check --status SNAPSHOT.sha256)
